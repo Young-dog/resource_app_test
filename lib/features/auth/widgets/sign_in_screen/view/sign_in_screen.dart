@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:resourse_app/features/auth/widgets/sign_up_screen/sign_up.dart';
 
 class SignInScreen extends StatefulWidget {
+  static const String id = 'sign_in_screen';
   const SignInScreen({Key? key}) : super(key: key);
 
   @override
@@ -25,6 +27,18 @@ class _SignInScreenState extends State<SignInScreen> {
   void dispose() {
     _passFocusNode.dispose();
     super.dispose();
+  }
+
+  void _submit(BuildContext context) {
+    FocusScope.of(context).unfocus();
+
+    if(!_formKey.currentState!.validate()) {
+      //Invalid
+      return;
+    }
+
+    _formKey.currentState!.save();
+
   }
 
   @override
@@ -82,7 +96,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           _email = value;
                         },
                         validator: (value) {
-                          if (value == null) {
+                          if (value!.isEmpty) {
                             return 'Укажите телефон или e-mail';
                           }
                           return null;
@@ -119,7 +133,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           _pass = value;
                         },
                         validator: (value) {
-                          if (value == null) {
+                          if (value!.isEmpty) {
                             return 'Введите пароль';
                           }
                           return null;
@@ -154,7 +168,9 @@ class _SignInScreenState extends State<SignInScreen> {
                                 ),
                               ),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              _submit(context);
+                            },
                             child: Text(
                               'Войти',
                               style: theme.labelMedium,
@@ -222,7 +238,9 @@ class _SignInScreenState extends State<SignInScreen> {
                           ),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).pushNamed(SignUpScreen.id);
+                      },
                       child: const Text(
                         'Зарегистрироваться',
                         style:  TextStyle(

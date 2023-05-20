@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 final lightTheme = ThemeData(
   brightness: Brightness.dark,
   textTheme: const TextTheme(
+    titleSmall: TextStyle(
+      fontFamily: "BrunoAceSC",
+      fontSize: 25,
+    ),
     titleMedium: TextStyle(
       fontFamily: "BrunoAceSC",
       fontSize: 35,
