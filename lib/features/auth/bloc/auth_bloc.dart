@@ -26,7 +26,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
               failureException: 'Wrong password provided for that user.'));
         }
       } catch (error) {
-        emit(AuthFailureState(failureException: error.toString()));
+        emit(AuthFailureState(failureException: error));
       }
     });
     on<AuthSignUpEvent>((event, emit) async {
@@ -54,7 +54,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
               failureException: 'The account already exists for that email.'));
         }
       } catch (error) {
-        emit(AuthFailureState(failureException: error.toString()));
+        emit(AuthFailureState(failureException: error));
       }
     });
   }

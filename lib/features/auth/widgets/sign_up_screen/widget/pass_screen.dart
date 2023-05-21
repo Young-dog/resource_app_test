@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../repositories/models/users/user.dart';
+import '../../../bloc/auth_bloc.dart';
+
 class PassScreen extends StatefulWidget {
   static const String id = 'pass_screen';
   const PassScreen({Key? key}) : super(key: key);
@@ -14,6 +17,26 @@ class _PassScreenState extends State<PassScreen> {
   late final FocusNode _repassFocusNode;
 
   Map<String, String>? dataUser;
+
+  final _authBloc = AuthBloc();
+
+  void _submit(BuildContext context) {
+    FocusScope.of(context).unfocus();
+
+    if(!_formKey.currentState!.validate()) {
+      //Invalid
+      return;
+    }
+
+    String? _mail = dataUser!['login'];
+    String? _name = dataUser!['username'];
+
+    _formKey.currentState!.save();
+
+    UserSignUp user = UserSignUp(login: _mail!, password: _pass!, username: _name!);
+
+    _authBloc.add(AuthSignUpEvent( user: user,));
+  }
 
   @override
   void didChangeDependencies() {
@@ -155,7 +178,9 @@ class _PassScreenState extends State<PassScreen> {
                         ),
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      _submit(context);
+                    },
                     child: Text(
                       'Зарегистрироваться',
                       style: theme.labelMedium,

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:resourse_app/features/auth/widgets/sign_up_screen/sign_up.dart';
 
+import '../../../../../repositories/models/users/user.dart';
+import '../../../bloc/auth_bloc.dart';
+
 class SignInScreen extends StatefulWidget {
   static const String id = 'sign_in_screen';
   const SignInScreen({Key? key}) : super(key: key);
@@ -13,6 +16,8 @@ class _SignInScreenState extends State<SignInScreen> {
   final _formKey = GlobalKey<FormState>();
 
   late final FocusNode _passFocusNode;
+
+  final _authBloc = AuthBloc();
 
   String? _email;
   String? _pass;
@@ -39,6 +44,9 @@ class _SignInScreenState extends State<SignInScreen> {
 
     _formKey.currentState!.save();
 
+    UserSignIn user = UserSignIn(login: _email!, password: _pass!);
+
+    _authBloc.add(AuthSignInEvent( user: user,));
   }
 
   @override
