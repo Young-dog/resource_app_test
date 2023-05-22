@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class PassField extends StatefulWidget {
   final TextEditingController controller;
-  final FocusNode passFocusNode;
+  final FocusNode focusNode;
   final TextTheme theme;
   final String error;
   final String name;
@@ -10,7 +10,7 @@ class PassField extends StatefulWidget {
   const PassField({
     required this.controller,
     required this.theme,
-    required this.passFocusNode,
+    required this.focusNode,
     required this.error,
     required this.name,
     super.key,
@@ -26,8 +26,9 @@ class _PassFieldState extends State<PassField> {
     return SizedBox(
       height: 40,
       child: TextFormField(
-        focusNode: widget.passFocusNode,
+        focusNode: widget.focusNode,
         style: widget.theme.labelSmall,
+        textInputAction: TextInputAction.done,
         decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
@@ -41,7 +42,7 @@ class _PassFieldState extends State<PassField> {
         ),
         obscureText: true,
         onFieldSubmitted: (_) {
-          //TODO:- submit
+          FocusScope.of(context).requestFocus(widget.focusNode);
         },
         onSaved: (value) {
           widget.controller.text = value!;

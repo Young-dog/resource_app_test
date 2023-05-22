@@ -1,11 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../repositories/models/users/user.dart';
-import '../bloc/auth_bloc.dart';
+part of 'sign_in_screen.dart';
 
 class PassScreen extends StatefulWidget {
   static const String id = 'pass_screen';
+
   const PassScreen({Key? key}) : super(key: key);
 
   @override
@@ -20,12 +17,22 @@ class _PassScreenState extends State<PassScreen> {
   Map<String, String>? dataUser;
 
   late final _authBloc;
+  late final _passController;
+  late final _repassController;
 
   void _submit(BuildContext context) {
     FocusScope.of(context).unfocus();
 
-    if(!_formKey.currentState!.validate()) {
+    if (!_formKey.currentState!.validate()) {
       //Invalid
+      return;
+    }
+    if (_passController.text != _repassController.text) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Пароли не совпадают'),
+        ),
+      );
       return;
     }
 
@@ -34,24 +41,27 @@ class _PassScreenState extends State<PassScreen> {
 
     _formKey.currentState!.save();
 
-    UserSignUp user = UserSignUp(login: _mail!, password: _pass!, username: _name!);
+    UserSignUp user = UserSignUp(
+        login: _mail!, password: _passController.text, username: _name!);
 
-    _authBloc.add(AuthSignUpEvent( user: user,));
+    _authBloc.add(AuthSignUpEvent(
+      user: user,
+    ));
   }
 
   @override
   void didChangeDependencies() {
     final args = ModalRoute.of(context)!.settings.arguments;
-    assert(args != null && args is Map<String, String>, 'The arguments do not match the required type');
+    assert(args != null && args is Map<String, String>,
+        'The arguments do not match the required type');
     dataUser = args as Map<String, String>;
     super.didChangeDependencies();
   }
 
-  String? _pass;
-  String? _repass;
-
   @override
   void initState() {
+    _passController = TextEditingController();
+    _repassController = TextEditingController();
     _authBloc = context.read<AuthBloc>();
     _repassFocusNode = FocusNode();
     super.initState();
@@ -59,6 +69,9 @@ class _PassScreenState extends State<PassScreen> {
 
   @override
   void dispose() {
+    _passController.dispose();
+    _repassController.dispose();
+    _authBloc.dispose();
     _repassFocusNode.dispose();
     super.dispose();
   }
@@ -66,8 +79,6 @@ class _PassScreenState extends State<PassScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).textTheme;
-    double wh = MediaQuery.of(context).size.width;
-    double hh = MediaQuery.of(context).size.height;
 
     return GestureDetector(
       onTap: () {
@@ -76,9 +87,8 @@ class _PassScreenState extends State<PassScreen> {
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: Text(
-            'Resourse',
-            style: theme.titleSmall,
+          title: TitleForApp(
+            theme: theme.titleSmall!,
           ),
         ),
         body: SafeArea(
@@ -87,110 +97,43 @@ class _PassScreenState extends State<PassScreen> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: ListView(
-                physics: BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 shrinkWrap: true,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 35,
                   ),
                   //password
-                  SizedBox(
-                    height: 40,
-                    child: TextFormField(
-                      style: theme.labelSmall,
-                      decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(
-                              color: Colors.grey, width: 1.0),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(
-                              color: Colors.white, width: 1.0),
-                        ),
-                        labelText: "Пароль",
-                      ),
-                      obscureText: true,
-                      onFieldSubmitted: (_) {
-                        FocusScope.of(context).requestFocus(_repassFocusNode);
-                      },
-                      onSaved: (value) {
-                        _pass = value;
-                      },
-                      validator: (value) {
-                        if (value == null) {
-                          return 'Введите пароль';
-                        }
-                        return null;
-                      },
-                    ),
+                  PassField(
+                    controller: _passController,
+                    theme: theme,
+                    focusNode: _repassFocusNode,
+                    error: 'Введите пароль',
+                    name: 'Пароль',
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   //repass
-                  SizedBox(
-                    height: 40,
-                    child: TextFormField(
-                      focusNode: _repassFocusNode,
-                      style: theme.labelSmall,
-                      decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(
-                              color: Colors.grey, width: 1.0),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(
-                              color: Colors.white, width: 1.0),
-                        ),
-                        labelText: "Повторите пароль",
-                      ),
-                      obscureText: true,
-                      onFieldSubmitted: (_) {
-                        //TODO: -submit
-                      },
-                      onSaved: (value) {
-                        _repass = value;
-                      },
-                      validator: (value) {
-                        if (value == null) {
-                          return 'Введите пароль ещё раз';
-                        }
-                        if (_repass != _pass) {
-                          return 'Пароли не совпадают';
-                        }
-                        return null;
-                      },
-                    ),
+                  PassField(
+                    controller: _repassController,
+                    theme: theme,
+                    focusNode: _repassFocusNode,
+                    error: 'Введите пароль ещё раз',
+                    name: 'Повторите пароль',
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   //Регистриция
-                  ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                          Colors.white),
-                      shape:
-                      MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                      ),
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _submit(context);
-                      });
-
+                  ButtonForAuthScreen(
+                    name: 'Зарегистрироваться',
+                    theme: theme.labelMedium!,
+                    type: false,
+                    color: Colors.white,
+                    voidCallback: () {
+                      _submit(context);
                     },
-                    child: Text(
-                      'Зарегистрироваться',
-                      style: theme.labelMedium,
-                    ),
                   ),
                 ],
               ),

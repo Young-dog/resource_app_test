@@ -2,13 +2,17 @@ import 'package:flutter/material.dart';
 
 class DataField extends StatefulWidget {
   final TextEditingController controller;
-  final FocusNode passFocusNode;
+  final FocusNode focusNode;
   final TextTheme theme;
+  final String error;
+  final String name;
 
   const DataField({
     required this.controller,
     required this.theme,
-    required this.passFocusNode,
+    required this.focusNode,
+    required this.error,
+    required this.name,
     super.key,
   });
 
@@ -23,6 +27,7 @@ class _DataFieldState extends State<DataField> {
       height: 40,
       child: TextFormField(
         style: widget.theme.labelSmall,
+        textInputAction: TextInputAction.done,
         decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
@@ -32,17 +37,22 @@ class _DataFieldState extends State<DataField> {
             borderRadius: BorderRadius.circular(10),
             borderSide: const BorderSide(color: Colors.white, width: 1.0),
           ),
-          labelText: "E-mail",
+          labelText: widget.name,
         ),
         onFieldSubmitted: (_) {
-          FocusScope.of(context).requestFocus(widget.passFocusNode);
+          FocusScope.of(context).requestFocus(widget.focusNode);
         },
         onSaved: (value) {
           widget.controller.text = value!;
         },
         validator: (value) {
           if (value!.isEmpty) {
-            return 'Укажите E-mail';
+            return widget.error;
+          }
+          if (widget.name == 'Отображаемое имя')  {
+            if (value.length < 3) {
+              return 'Слишком короткое имя';
+            }
           }
           return null;
         },

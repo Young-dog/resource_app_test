@@ -55,7 +55,7 @@ class ButtonForAuthScreen extends StatelessWidget {
             ),
           ),
         ),
-        onPressed: () {},
+        onPressed: voidCallback,
         child: Text(
           name,
           style: theme,

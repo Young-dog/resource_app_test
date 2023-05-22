@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:resourse_app/features/auth/view/pass_screen.dart';
+part of 'sign_in_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
   static const String id = 'sign_up_screen';
+
   const SignUpScreen({Key? key}) : super(key: key);
 
   @override
@@ -14,17 +14,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   late final FocusNode _usernameFocusNode;
 
-  String? _email;
-  String? _username;
+  late final _emailController;
+  late final _usernameController;
 
   @override
   void initState() {
+    _emailController = TextEditingController();
+    _usernameController = TextEditingController();
     _usernameFocusNode = FocusNode();
     super.initState();
   }
 
   @override
   void dispose() {
+    _emailController.dispose();
+    _usernameController.dispose();
     _usernameFocusNode.dispose();
     super.dispose();
   }
@@ -32,24 +36,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
   void _submit(BuildContext context) {
     FocusScope.of(context).unfocus();
 
-    if(!_formKey.currentState!.validate()) {
+    if (!_formKey.currentState!.validate()) {
       //Invalid
       return;
     }
 
     _formKey.currentState!.save();
 
-    Map<String, String> userData = {'login' : _email!, 'username' : _username!};
+    Map<String, String> userData = {
+      'login': _emailController.text,
+      'username': _usernameController.text
+    };
 
-    Navigator.of(context).pushNamed(PassScreen.id,arguments: userData);
-
+    Navigator.of(context).pushNamed(PassScreen.id, arguments: userData);
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).textTheme;
-    double wh = MediaQuery.of(context).size.width;
-    double hh = MediaQuery.of(context).size.height;
 
     return GestureDetector(
       onTap: () {
@@ -58,9 +62,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: Text(
-            'Resourse',
-            style: theme.titleSmall,
+          title: TitleForApp(
+            theme: theme.titleSmall!,
           ),
         ),
         body: SafeArea(
@@ -69,108 +72,45 @@ class _SignUpScreenState extends State<SignUpScreen> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: ListView(
-                physics: BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 shrinkWrap: true,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 35,
                   ),
                   //e-mail
-                  SizedBox(
-                    height: 40,
-                    child: TextFormField(
-                      style: theme.labelSmall,
-                      decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(
-                              color: Colors.grey, width: 1.0),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(
-                              color: Colors.white, width: 1.0),
-                        ),
-                        labelText: "Телефон или e-mail",
-                      ),
-                      onFieldSubmitted: (_) {
-                        FocusScope.of(context).requestFocus(_usernameFocusNode);
-                      },
-                      onSaved: (value) {
-                        _email = value;
-                      },
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Укажите телефон или e-mail';
-                        }
-                        return null;
-                      },
-                    ),
+                  DataField(
+                    controller: _emailController,
+                    theme: theme,
+                    focusNode: _usernameFocusNode,
+                    error: 'Укажите e-mail',
+                    name: 'E-mail',
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   //username
-                  SizedBox(
-                    height: 40,
-                    child: TextFormField(
-                      focusNode: _usernameFocusNode,
-                      style: theme.labelSmall,
-                      decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(
-                              color: Colors.grey, width: 1.0),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(
-                              color: Colors.white, width: 1.0),
-                        ),
-                        labelText: "Отображаемое имя",
-                      ),
-                      onFieldSubmitted: (_) {
-                        //TODO: -submit
-                      },
-                      onSaved: (value) {
-                        _username = value;
-                      },
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Введите отображаемое имя';
-                        }
-                        if (value.length < 3) {
-                          return 'Слишком короткое имя';
-                        }
-                        return null;
-                      },
-                    ),
+                  DataField(
+                    controller: _usernameController,
+                    theme: theme,
+                    focusNode: _usernameFocusNode,
+                    error: 'Введите отображаемое имя',
+                    name: 'Отображаемое имя',
                   ),
-
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   //Регистриция
-                  ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                          Colors.white),
-                      shape:
-                      MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                      ),
-                    ),
-                    onPressed: () {
+                  ButtonForAuthScreen(
+                    name: 'Продолжить',
+                    theme: theme.labelMedium!,
+                    type: false,
+                    color: Colors.white,
+                    voidCallback: () {
                       _submit(context);
                     },
-                    child: Text(
-                      'Продолжить',
-                      style: theme.labelMedium,
-                    ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Align(
@@ -180,36 +120,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       style: theme.labelSmall,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
-                  ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.transparent),
-                      shape:
-                      MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                      ),
-                      side: MaterialStateProperty.all(
-                        const BorderSide(
-                          color: Colors.grey,
-                          width: 1.0,
-                        ),
-                      ),
-                    ),
-                    onPressed: () {},
-                    child: const Text(
-                      'Зарегистрироваться с помощью google',
-                      style:  TextStyle(
-                          fontFamily: "Ysabeau",
-                          fontSize: 15,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w400
-                      ),
-                    ),
+                  ButtonForAuthScreen(
+                    name: 'Зарегистрироваться с помощью google',
+                    theme: styleForButtonAuth,
+                    type: false,
+                    color: Colors.transparent,
+                    voidCallback: () {},
                   ),
                 ],
               ),

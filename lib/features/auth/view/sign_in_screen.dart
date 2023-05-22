@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:resourse_app/features/auth/view/sign_up_screen.dart';
 import 'package:resourse_app/features/auth/widgets/title.dart';
 import '../../../repositories/models/users/user.dart';
 import '../../../theme/style_for_text.dart';
@@ -8,6 +7,10 @@ import '../bloc/auth_bloc.dart';
 import '../widgets/button_for_auth_screen.dart';
 import '../widgets/data_field.dart';
 import '../widgets/pass_field.dart';
+
+part 'sign_up_screen.dart';
+
+part 'pass_screen.dart';
 
 class SignInScreen extends StatefulWidget {
   static const String id = 'sign_in_screen';
@@ -50,8 +53,6 @@ class _SignInScreenState extends State<SignInScreen> {
     FocusScope.of(context).unfocus();
     Navigator.of(context).pushNamed(SignUpScreen.id);
   }
-
-
 
   @override
   void initState() {
@@ -102,7 +103,9 @@ class _SignInScreenState extends State<SignInScreen> {
                     DataField(
                       controller: _emailController,
                       theme: theme,
-                      passFocusNode: _passFocusNode,
+                      focusNode: _passFocusNode,
+                      error: 'Укажите E-mail',
+                      name: 'E-mail',
                     ),
                     const SizedBox(
                       height: 15,
@@ -110,7 +113,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     //password
                     PassField(
                       controller: _passController,
-                      passFocusNode: _passFocusNode,
+                      focusNode: _passFocusNode,
                       theme: theme,
                       error: 'Введите пароль',
                       name: 'Пароль',
@@ -172,30 +175,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         _navigateSignUp(context);
                       },
                       type: false,
-                    ),
-                    ElevatedButton(
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
-                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                        ),
-                        side: MaterialStateProperty.all(
-                          const BorderSide(
-                            color: Colors.grey,
-                            width: 1.0,
-                          ),
-                        ),
-                      ),
-                      onPressed: () {
-                        _navigateSignUp(context);
-                      },
-                      child: Text(
-                        'Зарегистрироваться',
-                        style: styleForButtonAuth,
-                      ),
-                    ),
+                    )
                   ],
                 ),
               ),
