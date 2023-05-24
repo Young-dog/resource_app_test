@@ -12,39 +12,69 @@ class BottomNavbar extends StatefulWidget {
 }
 
 class _BottomNavbarState extends State<BottomNavbar> {
-
   int pageIndex = 0;
 
-  final pages = [
-    const HomePage(),
-    const ReelsScreen(),
-    const ProfileScreen(),
+  List<Widget> pages = const [
+    HomePage(),
+    ReelsScreen(),
+    ProfileScreen(),
   ];
+
+
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height * 0.09,
-        decoration: const BoxDecoration(
-          color: Colors.transparent,
-         border: Border(
-           top: BorderSide(
-             color: Colors.grey,
-             width: 0.5,
-           ),
-         ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              IconButton(onPressed: () {}, icon: SvgPicture.asset('assets/icons/home.svg'))
-            ],
+      height: MediaQuery.of(context).size.height * 0.09,
+      decoration: const BoxDecoration(
+        color: Colors.transparent,
+        border: Border(
+          top: BorderSide(
+            color: Colors.grey,
+            width: 0.5,
           ),
         ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            IconButton(
+              enableFeedback: false,
+              onPressed: () {
+                Navigator.of(context).pushReplacementNamed(HomePage.id);
+              },
+              icon: SvgPicture.asset('assets/icons/home.svg'),
+            ),
+            IconButton(
+              enableFeedback: false,
+              onPressed: () {
+                Navigator.of(context).pushReplacementNamed(ReelsScreen.id);
+              },
+              icon: SvgPicture.asset('assets/icons/reels.svg'),
+
+            ),
+            IconButton(
+              enableFeedback: false,
+              onPressed: () {
+                Navigator.of(context).pushReplacementNamed(ProfileScreen.id);
+              },
+              color: Colors.white,
+              icon: Container(
+                height: MediaQuery.of(context).size.height*0.045,
+                width: MediaQuery.of(context).size.width*0.1,
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black),
+                  borderRadius: BorderRadius.all(Radius.circular(50)),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

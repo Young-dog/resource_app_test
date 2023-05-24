@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:resourse_app/features/auth/view/sign_in_screen.dart';
-import 'package:resourse_app/features/home_page/view/home_page.dart';
 
 import '../bloc/auth_bloc.dart';
 
@@ -13,7 +12,7 @@ class AuthScreen extends StatelessWidget {
     return Scaffold(
       body: BlocConsumer<AuthBloc, AuthState>(listener: (context, state) {
         if (state is AuthLogInState) {
-          Navigator.of(context).popAndPushNamed(HomePage.id);
+          // Navigator.of(context).popAndPushNamed(HomePage.id);
         }
         if (state is AuthFailureState) {
           ScaffoldMessenger.of(context).showSnackBar(
