@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:resourse_app/features/sign_in_screen/sign_in.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:resourse_app/features/auth/auth_screen.dart';
 import 'package:resourse_app/theme/theme.dart';
+import 'package:resourse_app/utils/router/router.dart';
+
+import 'features/auth/bloc/auth_bloc.dart';
 
 
 class MyApp extends StatelessWidget {
@@ -8,9 +12,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: lightTheme,
-      home: const SignInScreen(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider (
+          create: (BuildContext context) => AuthBloc(),
+        ),
+      ],
+      child: MaterialApp(
+        theme: darkTheme,
+        home: const AuthScreen(),
+        routes: router,
+      ),
     );
   }
 }
