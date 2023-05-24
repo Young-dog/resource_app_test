@@ -26,7 +26,6 @@ class _PassFieldState extends State<PassField> {
     return SizedBox(
       height: 40,
       child: TextFormField(
-        focusNode: widget.focusNode,
         style: widget.theme.labelSmall,
         textInputAction: TextInputAction.done,
         decoration: InputDecoration(

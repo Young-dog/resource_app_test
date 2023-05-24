@@ -71,7 +71,6 @@ class _PassScreenState extends State<PassScreen> {
   void dispose() {
     _passController.dispose();
     _repassController.dispose();
-    _authBloc.dispose();
     _repassFocusNode.dispose();
     super.dispose();
   }

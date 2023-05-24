@@ -68,7 +68,6 @@ class _SignInScreenState extends State<SignInScreen> {
     _passFocusNode.dispose();
     _emailController.dispose();
     _passController.dispose();
-    _authBloc.dispose();
     super.dispose();
   }
 
