@@ -3,8 +3,8 @@ import 'package:resourse_app/features/profile/view/view.dart';
 import 'package:resourse_app/features/reels/view/view.dart';
 
 class HomePage extends StatelessWidget {
-  static const String id = 'home_page';
-  HomePage({Key? key}) : super(key: key);
+  static const String git id = 'home_page';
+  const HomePage({Key? key}) : super(key: key);
 
 
 
