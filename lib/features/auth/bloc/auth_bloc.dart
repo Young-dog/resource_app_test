@@ -30,7 +30,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       } catch (error) {
         emit(AuthFailureState(failureException: error));
       }
-      print("Переданный $state");
     });
     on<AuthSignUpEvent>((event, emit) async {
       emit(AuthLoadingState());
@@ -49,20 +48,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           'username' : user.username,
         });
         emit(AuthLogInState());
-        print(state);
       } on FirebaseAuthException catch (e) {
         if (e.code == 'weak-password') {
           emit(AuthFailureState(
               failureException: 'The password provided is too weak.'));
-          print(state);
         } else if (e.code == 'email-already-in-use') {
           emit(AuthFailureState(
               failureException: 'The account already exists for that email.'));
-          print(state);
         }
       } catch (error) {
         emit(AuthFailureState(failureException: error));
-        print(state);
       }
     });
   }

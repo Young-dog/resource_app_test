@@ -12,7 +12,6 @@ class AuthScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocConsumer<AuthBloc, AuthState>(listener: (context, state) {
-        print(state);
         if (state is AuthLogInState) {
           Navigator.of(context).popAndPushNamed(HomePage.id);
         }
@@ -24,7 +23,6 @@ class AuthScreen extends StatelessWidget {
           );
         }
       }, builder: (context, state) {
-        print("Переданный в widget $state");
         if (state is AuthLoadingState) {
           return const Center(
             child: CircularProgressIndicator(
