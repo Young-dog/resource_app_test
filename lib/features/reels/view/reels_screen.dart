@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../bottom_navigation_bar/view/bottom_nav_bar.dart';
 
 class ReelsScreen extends StatelessWidget {
   static const String id = 'reels_screen';
@@ -8,9 +7,8 @@ class ReelsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(),
-      bottomNavigationBar: const BottomNavbar(),
+    return Container(
+      child: Center(child: Text('Reels')),
     );
   }
 }
