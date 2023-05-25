@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 
 final darkTheme = ThemeData(
   brightness: Brightness.dark,
+  splashColor: Colors.transparent,
+  highlightColor: Colors.transparent,
+  hoverColor: Colors.transparent,
   textTheme: const TextTheme(
     titleSmall: TextStyle(
       fontFamily: "BrunoAceSC",
