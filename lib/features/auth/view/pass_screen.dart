@@ -1,5 +1,6 @@
 part of 'sign_in_screen.dart';
 
+@RoutePage()
 class PassScreen extends StatefulWidget {
   static const String id = 'pass_screen';
 

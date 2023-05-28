@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import 'descriptions_for_profile.dart';
 
@@ -27,7 +28,11 @@ class _UserImageState extends State<UserImage> {
         child: Container(
           decoration: const BoxDecoration(
             shape: BoxShape.circle,
-            color: Colors.blue,
+            color: Colors.black54,
+          ),
+          child: SvgPicture.asset(
+            'assets/icons/profile.svg',
+            colorFilter: const ColorFilter.mode(Colors.black, BlendMode.srcIn),
           ),
         ),
       ),

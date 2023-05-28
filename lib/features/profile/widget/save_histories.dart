@@ -18,8 +18,9 @@ class SaveHistories extends StatelessWidget {
         child: Container(
           decoration: const BoxDecoration(
             shape: BoxShape.circle,
-            color: Colors.blue,
+            color: Colors.black54,
           ),
+          child: Icon(Icons.add, size: 35,),
         ),
       ),
     );

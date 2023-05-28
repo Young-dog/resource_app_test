@@ -5,6 +5,7 @@ class DescriptionsForProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text("username");
+    final theme = Theme.of(context).textTheme;
+    return Text("username", style: theme.bodySmall );
   }
 }
