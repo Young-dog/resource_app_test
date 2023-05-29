@@ -14,6 +14,7 @@ class _PassScreenState extends State<PassScreen> {
   final _formKey = GlobalKey<FormState>();
 
   late final FocusNode _repassFocusNode;
+  final String _imageProfile = 'assets/images/profile.png';
 
   Map<String, String>? dataUser;
 
@@ -43,7 +44,10 @@ class _PassScreenState extends State<PassScreen> {
     _formKey.currentState!.save();
 
     UserSignUp user = UserSignUp(
-        login: _mail!, password: _passController.text, username: _name!);
+      login: _mail!,
+      password: _passController.text,
+      username: _name!, avatar: _imageProfile,
+    );
 
     _authBloc.add(AuthSignUpEvent(
       user: user,

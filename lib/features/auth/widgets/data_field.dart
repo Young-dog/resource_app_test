@@ -29,9 +29,14 @@ class _DataFieldState extends State<DataField> {
         style: widget.theme.labelSmall,
         textInputAction: TextInputAction.done,
         decoration: InputDecoration(
+          labelStyle:  const TextStyle(
+              color: Colors.white
+          ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
-            borderSide: const BorderSide(color: Colors.grey, width: 1.0),
+            borderSide: const BorderSide(color: Colors.grey, width: 1.0
+            ),
+
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),

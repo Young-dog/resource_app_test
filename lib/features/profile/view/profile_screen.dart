@@ -1,5 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:resourse_app/features/auth/bloc/auth_bloc.dart';
 import 'package:resourse_app/features/edit_profile/view/edit_profile_screen.dart';
 import 'package:resourse_app/features/profile/widget/followers_buttons.dart';
 import 'package:resourse_app/features/wallet/view/wallet_screen.dart';
@@ -22,8 +24,11 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
+  late final _authBloc;
+
   @override
   void initState() {
+    _authBloc = context.read<AuthBloc>();
     super.initState();
   }
 
@@ -147,6 +152,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   style: theme.bodySmall,
                 ),
                 onTap: () {},
+              ),
+              ListTile(
+                title: Text(
+                  'Выход',
+                  style: theme.bodySmall,
+                ),
+                onTap: () {
+                  _authBloc.add(AuthLogOutEvent());
+                  setState(() {
+
+                  });
+                },
               ),
             ],
           ),

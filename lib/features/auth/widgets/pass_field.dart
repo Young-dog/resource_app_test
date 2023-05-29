@@ -29,6 +29,9 @@ class _PassFieldState extends State<PassField> {
         style: widget.theme.labelSmall,
         textInputAction: TextInputAction.done,
         decoration: InputDecoration(
+          labelStyle:  const TextStyle(
+              color: Colors.white
+          ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
             borderSide: const BorderSide(color: Colors.grey, width: 1.0),
