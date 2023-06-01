@@ -1,4 +1,4 @@
-import 'dart:io';
+// ignore_for_file: prefer_typing_uninitialized_variables
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +14,6 @@ import '../widgets/pass_field.dart';
 part 'sign_up_screen.dart';
 
 part 'pass_screen.dart';
-@RoutePage()
 class SignInScreen extends StatefulWidget {
   static const String id = 'sign_in_screen';
 
@@ -30,7 +29,6 @@ class _SignInScreenState extends State<SignInScreen> {
   late final FocusNode _passFocusNode;
 
   late final _authBloc;
-
   late final _emailController;
   late final _passController;
 

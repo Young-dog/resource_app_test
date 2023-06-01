@@ -1,33 +1,32 @@
 import 'package:flutter/material.dart';
 
-class PassField extends StatefulWidget {
-  final TextEditingController controller;
-  final FocusNode focusNode;
+class FieldDataForUser extends StatefulWidget {
+  final double height;
   final TextTheme theme;
-  final String error;
   final String name;
+  final Function callback;
+  final TextEditingController controller;
 
-  const PassField({
-    required this.controller,
+  const FieldDataForUser({
+    Key? key,
+    required this.height,
     required this.theme,
-    required this.focusNode,
-    required this.error,
     required this.name,
-    super.key,
-  });
+    required this.controller,
+    required this.callback,
+  }) : super(key: key);
 
   @override
-  State<PassField> createState() => _PassFieldState();
+  State<FieldDataForUser> createState() => _FieldDataForUserState();
 }
 
-class _PassFieldState extends State<PassField> {
+class _FieldDataForUserState extends State<FieldDataForUser> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 40,
+      height: widget.height,
       child: TextFormField(
         style: widget.theme.labelSmall,
-        textInputAction: TextInputAction.done,
         decoration: InputDecoration(
           labelStyle: const TextStyle(color: Colors.white),
           enabledBorder: OutlineInputBorder(
@@ -40,18 +39,11 @@ class _PassFieldState extends State<PassField> {
           ),
           labelText: widget.name,
         ),
-        obscureText: true,
-        onFieldSubmitted: (_) {
-          FocusScope.of(context).requestFocus(widget.focusNode);
-        },
         onSaved: (value) {
           widget.controller.text = value!;
         },
         validator: (value) {
-          if (value!.isEmpty) {
-            return widget.error;
-          }
-          return null;
+          return widget.callback(value);
         },
       ),
     );

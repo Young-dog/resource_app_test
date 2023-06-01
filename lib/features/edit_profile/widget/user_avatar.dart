@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class UserAvatar extends StatefulWidget {
   String imageUrl;
 
@@ -12,23 +13,25 @@ class UserAvatar extends StatefulWidget {
 class _UserAvatarState extends State<UserAvatar> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 75,
-      height: 75,
-      decoration: const BoxDecoration(
-        shape: BoxShape.circle,
-        color: Colors.white,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(3),
-        child: Container(
-          decoration: const BoxDecoration(
-            shape: BoxShape.circle,
-            color: Colors.black54,
-          ),
-          child: Image.asset(
-            widget.imageUrl,
-            fit: BoxFit.fill,
+    return GestureDetector(
+      onTap: () {},
+      child: Container(
+        width: 75,
+        height: 75,
+        decoration: const BoxDecoration(
+          shape: BoxShape.circle,
+          color: Colors.white,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(3),
+          child: Container(
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.black54,
+            ),
+            child: Image.network(
+              widget.imageUrl,
+            ),
           ),
         ),
       ),

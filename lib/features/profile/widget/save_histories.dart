@@ -20,7 +20,7 @@ class SaveHistories extends StatelessWidget {
             shape: BoxShape.circle,
             color: Colors.black54,
           ),
-          child: Icon(Icons.add, size: 35,),
+          child: const Icon(Icons.add, size: 35,),
         ),
       ),
     );

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:resourse_app/features/auth/bloc/auth_bloc.dart';
 import 'package:resourse_app/repositories/models/users/user.dart';
 
 import '../../../repositories/user/user_repositories.dart';
+import '../widget/field_data_for_user.dart';
 import '../widget/user_avatar.dart';
 
 class EditProfileScreen extends StatefulWidget {
@@ -19,6 +17,17 @@ class EditProfileScreen extends StatefulWidget {
 class _EditProfileScreenState extends State<EditProfileScreen> {
   UserAccount? _user;
 
+  // ignore: prefer_typing_uninitialized_variables
+  late final _nameController;
+
+  // ignore: prefer_typing_uninitialized_variables
+  late final _descriptionController;
+
+  // ignore: prefer_typing_uninitialized_variables
+  late final _phoneController;
+
+  // ignore: prefer_typing_uninitialized_variables
+  late final _mailController;
 
   Future<void> _loadUser() async {
     _user = await UserRepositories().getUserData();
@@ -28,45 +37,91 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   @override
   void initState() {
     _loadUser();
-
+    _nameController = TextEditingController();
+    _descriptionController = TextEditingController();
+    _phoneController = TextEditingController();
+    _mailController = TextEditingController();
     super.initState();
   }
 
   @override
+  void dispose() {
+    _nameController.dispose();
+    _descriptionController.dispose();
+    _phoneController.dispose();
+    _mailController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
+
     return SafeArea(
       child: Scaffold(
         body: _user == null
-            ? Center(
+            ? const Center(
                 child: CircularProgressIndicator(),
               )
-            : ListView(
-                children: <Widget>[
-                  _user!.avatar == ''
-                      ? Container(
-                          width: 75,
-                          height: 75,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.white,
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(3),
-                            child: Container(
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.black54,
-                              ),
-                              child: SvgPicture.asset(
-                                'assets/icons/profile.svg',
-                                colorFilter: const ColorFilter.mode(
-                                    Colors.black, BlendMode.srcIn),
-                              ),
-                            ),
-                          ),
-                        )
-                      : UserAvatar(imageUrl: _user!.avatar!)
-                ],
+            : Padding(
+                padding: const EdgeInsets.all(35),
+                child: ListView(
+                  children: <Widget>[
+                    UserAvatar(imageUrl: _user!.avatar!),
+                    const SizedBox(height: 25),
+                    //name
+                    FieldDataForUser(
+                      height: 40,
+                      theme: theme,
+                      name: 'Имя',
+                      controller: _nameController,
+                      callback: (value) {
+                        if (value!.isEmpty) {
+                          return 'Имя не может быть пустым!';
+                        }
+                        if (value.length < 3) {
+                          return 'Слишком короткое имя';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 25),
+                    //description
+                    FieldDataForUser(
+                      height: 90,
+                      theme: theme,
+                      name: 'О себе',
+                      controller: _descriptionController,
+                      callback: (value) {
+                        return null;
+                      },
+                    ),
+                    //phone
+                    FieldDataForUser(
+                      height: 40,
+                      theme: theme,
+                      name: 'Телефон',
+                      controller: _phoneController,
+                      callback: (value) {
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 25),
+                    //mail
+                    FieldDataForUser(
+                      height: 40,
+                      theme: theme,
+                      name: 'e-mail',
+                      controller: _mailController,
+                      callback: (value) {
+                        if (value!.isEmpty) {
+                          return 'e-mail не может быть пустым!';
+                        }
+                        return null;
+                      },
+                    ),
+                  ],
+                ),
               ),
       ),
     );

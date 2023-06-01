@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -5,6 +7,8 @@ import 'package:resourse_app/features/auth/bloc/auth_bloc.dart';
 import 'package:resourse_app/features/edit_profile/view/edit_profile_screen.dart';
 import 'package:resourse_app/features/profile/widget/followers_buttons.dart';
 import 'package:resourse_app/features/wallet/view/wallet_screen.dart';
+import '../../../repositories/models/users/user.dart';
+import '../../../repositories/user/user_repositories.dart';
 import '../../../theme/style_for_text.dart';
 import '../../auth/widgets/button_for_auth_screen.dart';
 import '../widget/descriptions_for_profile.dart';
@@ -24,10 +28,18 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
+  UserAccount? _user;
+
+  Future<void> _loadUser() async {
+    _user = await UserRepositories().getUserData();
+    setState(() {});
+  }
+
   late final _authBloc;
 
   @override
   void initState() {
+    _loadUser();
     _authBloc = context.read<AuthBloc>();
     super.initState();
   }
@@ -39,7 +51,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     double hh = MediaQuery.of(context).size.height;
 
     return SafeArea(
-      child: Scaffold(
+      child: _user == null ? const Center(
+        child: CircularProgressIndicator(color: Colors.white,),
+      ) : Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
           title: const Text('username'),
@@ -49,7 +63,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => WalletScreen(),
+                    builder: (context) => const WalletScreen(),
                   ),
                 );
               },
@@ -68,11 +82,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
               EdgeInsets.symmetric(horizontal: wh * 0.04, vertical: hh * 0.02),
           child: ListView(
             children: <Widget>[
-              const Row(
+               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  UserImage(),
-                  FollowersButtons(),
+                  UserImage(imageUrl: _user!.avatar!,),
+                  const FollowersButtons(),
                 ],
               ),
               const SizedBox(
@@ -134,7 +148,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => EditProfileScreen(),
+                      builder: (context) => const EditProfileScreen(),
                     ),
                   );
                 },

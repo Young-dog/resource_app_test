@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 part of 'sign_in_screen.dart';
 
 @RoutePage()
@@ -14,7 +16,6 @@ class _PassScreenState extends State<PassScreen> {
   final _formKey = GlobalKey<FormState>();
 
   late final FocusNode _repassFocusNode;
-  final String _imageProfile = 'assets/images/profile.png';
 
   Map<String, String>? dataUser;
 
@@ -38,15 +39,15 @@ class _PassScreenState extends State<PassScreen> {
       return;
     }
 
-    String? _mail = dataUser!['login'];
-    String? _name = dataUser!['username'];
+    String? mail = dataUser!['login'];
+    String? name = dataUser!['username'];
 
     _formKey.currentState!.save();
 
     UserSignUp user = UserSignUp(
-      login: _mail!,
+      login: mail!,
       password: _passController.text,
-      username: _name!, avatar: _imageProfile,
+      username: name!,
     );
 
     _authBloc.add(AuthSignUpEvent(

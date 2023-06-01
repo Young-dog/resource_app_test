@@ -7,9 +7,16 @@ class UserRepositories {
   Future<UserAccount> getUserData() async {
     Map<String, dynamic>? userdata;
     final currentUser = FirebaseAuth.instance.currentUser!.uid;
-    final data = await FirebaseFirestore.instance.collection('users').doc(currentUser).get();
-      userdata = data.data()!;
-    UserAccount user = UserAccount(name: userdata['username'], description: userdata['mail']);
+    final data = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(currentUser)
+        .get();
+    userdata = data.data()!;
+    UserAccount user = UserAccount(
+      name: userdata['username'],
+      description: userdata['mail'],
+      avatar: userdata['imageAvatar'],
+    );
     return user;
   }
 }

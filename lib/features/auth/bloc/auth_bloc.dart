@@ -1,12 +1,9 @@
-import 'dart:io';
-
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:resourse_app/repositories/models/users/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart' as fires;
 
 part 'auth_event.dart';
 
@@ -16,7 +13,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc() : super(AuthInitialState()) {
     final auth = FirebaseAuth.instance;
 
-    String? imageUrl;
+    String imageUrl =
+        'https://firebasestorage.googleapis.com/v0/b/resourse-app.appspot.com/o/default%2Favatar%2Fprofile.png?alt=media&token=5d028fea-d196-484c-ad8e-ea4014c23e60&_gl=1*1tl60l2*_ga*NTQxOTcxMDAuMTY4MzYzOTQxOA..*_ga_CW55HF8NVT*MTY4NTQzMDc1MS4xMS4xLjE2ODU0MzE1NTcuMC4wLjA.';
     on<AuthSignInEvent>((event, emit) async {
       emit(AuthLoadingState());
       try {
@@ -38,27 +36,20 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     });
     on<AuthSignUpEvent>((event, emit) async {
       emit(AuthLoadingState());
-      try {
-        fires.FirebaseStorage storage = fires.FirebaseStorage.instance; // Создание экземпляра
+      try {// Создание экземпляра
         final user = event.user;
         final UserCredential userCredential =
             await auth.createUserWithEmailAndPassword(
                 email: event.user.login, password: event.user.password);
-
-        File userAvatar = await File(user.avatar).create();
-
-          await storage.ref("data/${userCredential.user!.uid}/avatar/${UniqueKey().toString()}.png").putFile(userAvatar).then((taskSnapshot) async {
-            imageUrl = await taskSnapshot.ref.getDownloadURL();
-          });
 
         await FirebaseFirestore.instance
             .collection('users')
             .doc(userCredential.user!.uid)
             .set({
           'userId': userCredential.user!.uid,
-          'mail' : user.login,
-          'username' : user.username,
-          'description' : '',
+          'mail': user.login,
+          'username': user.username,
+          'description': '',
           'imageAvatar': imageUrl,
         });
         emit(AuthLogInState());
@@ -72,7 +63,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         }
       } catch (error) {
         emit(AuthFailureState(failureException: error));
-        print(error);
       }
     });
     on<AuthLogOutEvent>((event, emit) async {

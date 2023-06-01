@@ -1,6 +1,7 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 part of 'sign_in_screen.dart';
 
-@RoutePage()
 class SignUpScreen extends StatefulWidget {
   static const String id = 'sign_up_screen';
 

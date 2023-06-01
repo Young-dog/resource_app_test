@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
@@ -6,7 +5,7 @@ import 'package:resourse_app/features/profile/view/profile_screen.dart';
 import 'package:resourse_app/features/reels/view/reels_screen.dart';
 import '../../posts/view/posts_screen.dart';
 
-@RoutePage()
+
 class HomePage extends StatelessWidget {
   static const String id = 'home_page';
 
