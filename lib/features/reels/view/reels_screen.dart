@@ -1,8 +1,5 @@
-
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
-@RoutePage()
 class ReelsScreen extends StatelessWidget {
   static const String id = 'reels_screen';
   const ReelsScreen({Key? key}) : super(key: key);

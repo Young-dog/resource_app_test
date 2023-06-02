@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-
 class UserImage extends StatefulWidget {
   final String imageUrl;
+
   const UserImage({Key? key, required this.imageUrl}) : super(key: key);
 
   @override
@@ -12,21 +12,12 @@ class UserImage extends StatefulWidget {
 class _UserImageState extends State<UserImage> {
   @override
   Widget build(BuildContext context) {
-
-    return Container(
-      width: 75,
-      height: 75,
-      decoration: const BoxDecoration(
-        shape: BoxShape.circle,
-        color: Colors.white,
-      ),
+    return CircleAvatar(
+      radius: 45,
+      backgroundColor: Colors.white,
       child: Padding(
-        padding: const EdgeInsets.all(3),
-        child: Container(
-          decoration: const BoxDecoration(
-            shape: BoxShape.circle,
-            color: Colors.black54,
-          ),
+        padding: const EdgeInsets.all(1.5), // Border radius
+        child: ClipOval(
           child: Image.network(
             widget.imageUrl,
           ),

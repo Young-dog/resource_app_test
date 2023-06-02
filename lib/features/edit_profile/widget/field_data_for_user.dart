@@ -26,6 +26,8 @@ class _FieldDataForUserState extends State<FieldDataForUser> {
     return SizedBox(
       height: widget.height,
       child: TextFormField(
+        readOnly: widget.name == 'Уникальный идентификатор' ? true : false,
+        initialValue: widget.controller.text,
         style: widget.theme.labelSmall,
         decoration: InputDecoration(
           labelStyle: const TextStyle(color: Colors.white),

@@ -40,16 +40,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         final user = event.user;
         final UserCredential userCredential =
             await auth.createUserWithEmailAndPassword(
-                email: event.user.login, password: event.user.password);
+                email: event.user.mail, password: event.user.password);
 
         await FirebaseFirestore.instance
             .collection('users')
             .doc(userCredential.user!.uid)
             .set({
-          'userId': userCredential.user!.uid,
-          'mail': user.login,
+          'userId': user.uniqueId,
+          'mail': user.mail,
           'username': user.username,
-          'description': '',
+          'description': user.description,
+          'phone' : user.phone,
           'imageAvatar': imageUrl,
         });
         emit(AuthLogInState());

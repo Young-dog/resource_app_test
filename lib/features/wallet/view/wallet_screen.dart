@@ -1,11 +1,9 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:resourse_app/repositories/crypto_coins/crypto_coins_repositories.dart';
 
 import '../../../repositories/models/crypto_coin/crypto_coin.dart';
 import '../widgets/crypto_coin_tile.dart';
 
-@RoutePage()
 class WalletScreen extends StatefulWidget {
   static const String id = 'wallet';
 

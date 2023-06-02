@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:resourse_app/features/auth/bloc/auth_bloc.dart';
@@ -15,7 +14,6 @@ import '../widget/descriptions_for_profile.dart';
 import '../widget/save_histories.dart';
 import '../widget/user_image.dart';
 
-@RoutePage()
 class ProfileScreen extends StatefulWidget {
   static const String id = 'profile_screen';
 
@@ -81,11 +79,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
           padding:
               EdgeInsets.symmetric(horizontal: wh * 0.04, vertical: hh * 0.02),
           child: ListView(
+            physics: const BouncingScrollPhysics(),
             children: <Widget>[
                Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  UserImage(imageUrl: _user!.avatar!,),
+                  UserImage(imageUrl: _user!.avatarUrl!,),
                   const FollowersButtons(),
                 ],
               ),

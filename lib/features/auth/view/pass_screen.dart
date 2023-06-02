@@ -1,8 +1,7 @@
-// ignore_for_file: prefer_typing_uninitialized_variables
+// ignore_for_file: prefer_typing_uninitialized_variables, no_leading_underscores_for_local_identifiers
 
 part of 'sign_in_screen.dart';
 
-@RoutePage()
 class PassScreen extends StatefulWidget {
   static const String id = 'pass_screen';
 
@@ -44,10 +43,13 @@ class _PassScreenState extends State<PassScreen> {
 
     _formKey.currentState!.save();
 
+    final listMail = mail!.split('@');
+    final _uniqueId = listMail[0];
+
     UserSignUp user = UserSignUp(
-      login: mail!,
+      mail: mail,
       password: _passController.text,
-      username: name!,
+      username: name!, uniqueId: '@$_uniqueId',
     );
 
     _authBloc.add(AuthSignUpEvent(

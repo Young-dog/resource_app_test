@@ -14,8 +14,11 @@ class UserRepositories {
     userdata = data.data()!;
     UserAccount user = UserAccount(
       name: userdata['username'],
-      description: userdata['mail'],
-      avatar: userdata['imageAvatar'],
+      description: userdata['description'],
+      avatarUrl: userdata['imageAvatar'],
+      mail: userdata['mail'],
+      uniqueId: userdata['userId'],
+      phone: userdata['phone'],
     );
     return user;
   }
