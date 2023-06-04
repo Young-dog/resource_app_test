@@ -51,18 +51,9 @@ class _UserAvatarState extends State<UserAvatar> {
       },
       child: CircleAvatar(
         radius: 56,
-        backgroundColor: Colors.white,
-        child: Padding(
-          padding: const EdgeInsets.all(1.5), // Border radius
-          child: ClipOval(
-            child: _file == null
-                ? Image.network(
-                    widget.imageUrl,
-                  )
-                : Image.file(
-                    _file!,
-                  ),
-          ),
+        child: CircleAvatar(
+          radius: 56,
+          backgroundImage: _file == null ? NetworkImage(widget.imageUrl) : FileImage(_file!) as ImageProvider,
         ),
       ),
     );

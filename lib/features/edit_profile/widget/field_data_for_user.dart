@@ -44,6 +44,9 @@ class _FieldDataForUserState extends State<FieldDataForUser> {
         onSaved: (value) {
           widget.controller.text = value!;
         },
+        onChanged: (value) {
+          widget.controller.text = value;
+        },
         validator: (value) {
           return widget.callback(value);
         },

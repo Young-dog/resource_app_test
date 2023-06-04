@@ -51,12 +51,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     FocusScope.of(context).unfocus();
 
     final user = UserUpdate(
-      imageFile: _imageUlrController.text,
+      imageUrl: _imageUlrController.text,
       phone: _phoneController.text,
       mail: _mailController.text,
       name: _nameController.text,
       description: _descriptionController.text,
     );
+
+    print('Username : ${_nameController.text}' );
 
     _editProfileBloc.add(UploadDataProfileEvent(
       userUpdate: user,
@@ -90,108 +92,136 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context).textTheme;
 
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(),
-        body: _user == null
-            ? const Center(
-                child: CircularProgressIndicator(),
-              )
-            : Form(
-                key: _key,
-                child: Padding(
-                  padding: const EdgeInsets.all(35),
-                  child: ListView(
-                    physics: const BouncingScrollPhysics(),
-                    children: <Widget>[
-                      UserAvatar(
-                        imageUrl: _user!.avatarUrl,
-                        controller: _imageUlrController,
+    return BlocConsumer<EditProfileBloc, EditProfileState>(
+      listener: (context, state) {
+        if (state is EditProfileFailureState) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.failureException.toString()),
+            ),
+          );
+        }
+
+        if (state is EditProfileUpdatedState) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.msg.toString()),
+            ),
+          );
+        }
+      },
+      builder: (context, state) {
+        if (state is EditProfileLoadingState) {
+          return const Center(
+            child: CircularProgressIndicator(
+              color: Colors.white,
+            ),
+          );
+        }
+        return SafeArea(
+          child: Scaffold(
+            appBar: AppBar(),
+            body: _user == null
+                ? const Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : Form(
+                    key: _key,
+                    child: Padding(
+                      padding: const EdgeInsets.all(35),
+                      child: ListView(
+                        physics: const BouncingScrollPhysics(),
+                        children: <Widget>[
+                          UserAvatar(
+                            imageUrl: _user!.avatarUrl,
+                            controller: _imageUlrController,
+                          ),
+                          const SizedBox(height: 35),
+                          //name
+                          FieldDataForUser(
+                            height: 40,
+                            theme: theme,
+                            name: 'Имя',
+                            controller: _nameController,
+                            callback: (value) {
+                              if (value!.isEmpty) {
+                                return 'Имя не может быть пустым!';
+                              }
+                              if (value.length < 3) {
+                                return 'Слишком короткое имя';
+                              }
+                              return null;
+                            },
+                          ),
+                          const SizedBox(height: 5),
+                          //uid
+                          FieldDataForUser(
+                            height: 40,
+                            theme: theme,
+                            name: 'Уникальный идентификатор',
+                            controller: _uidController,
+                            callback: (value) {
+                              if (value!.isEmpty) {
+                                return 'Уникальный идентификатор не может быть пустым!';
+                              }
+                              return null;
+                            },
+                          ),
+                          const SizedBox(height: 65),
+                          //description
+                          FieldDataForUser(
+                            height: 90,
+                            theme: theme,
+                            name: 'О себе',
+                            controller: _descriptionController,
+                            callback: (value) {
+                              return null;
+                            },
+                          ),
+                          const SizedBox(height: 35),
+                          //phone
+                          FieldDataForUser(
+                            height: 40,
+                            theme: theme,
+                            name: 'Телефон',
+                            controller: _phoneController,
+                            callback: (value) {
+                              return null;
+                            },
+                          ),
+                          const SizedBox(height: 5),
+                          //mail
+                          FieldDataForUser(
+                            height: 40,
+                            theme: theme,
+                            name: 'e-mail',
+                            controller: _mailController,
+                            callback: (value) {
+                              if (value!.isEmpty) {
+                                return 'e-mail не может быть пустым!';
+                              }
+                              return null;
+                            },
+                          ),
+                          const SizedBox(
+                            height: 90,
+                          ),
+                          ButtonForAuthScreen(
+                            name: 'Изменить',
+                            theme: theme.labelMedium!,
+                            type: false,
+                            color: Colors.white,
+                            voidCallback: () {
+                              _submit(context);
+                            },
+                          ),
+                        ],
                       ),
-                      const SizedBox(height: 35),
-                      //name
-                      FieldDataForUser(
-                        height: 40,
-                        theme: theme,
-                        name: 'Имя',
-                        controller: _nameController,
-                        callback: (value) {
-                          if (value!.isEmpty) {
-                            return 'Имя не может быть пустым!';
-                          }
-                          if (value.length < 3) {
-                            return 'Слишком короткое имя';
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: 5),
-                      //uid
-                      FieldDataForUser(
-                        height: 40,
-                        theme: theme,
-                        name: 'Уникальный идентификатор',
-                        controller: _uidController,
-                        callback: (value) {
-                          if (value!.isEmpty) {
-                            return 'Уникальный идентификатор не может быть пустым!';
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: 65),
-                      //description
-                      FieldDataForUser(
-                        height: 90,
-                        theme: theme,
-                        name: 'О себе',
-                        controller: _descriptionController,
-                        callback: (value) {
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: 35),
-                      //phone
-                      FieldDataForUser(
-                        height: 40,
-                        theme: theme,
-                        name: 'Телефон',
-                        controller: _phoneController,
-                        callback: (value) {
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: 5),
-                      //mail
-                      FieldDataForUser(
-                        height: 40,
-                        theme: theme,
-                        name: 'e-mail',
-                        controller: _mailController,
-                        callback: (value) {
-                          if (value!.isEmpty) {
-                            return 'e-mail не может быть пустым!';
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(
-                        height: 90,
-                      ),
-                      ButtonForAuthScreen(
-                        name: 'Изменить',
-                        theme: theme.labelMedium!,
-                        type: false,
-                        color: Colors.white,
-                        voidCallback: () {
-                          _submit(context);
-                        },
-                      ),
-                    ],
+                    ),
                   ),
-                ),
-              ),
-      ),
+          ),
+        );
+      },
     );
   }
 }

@@ -15,13 +15,10 @@ class _UserImageState extends State<UserImage> {
     return CircleAvatar(
       radius: 45,
       backgroundColor: Colors.white,
-      child: Padding(
-        padding: const EdgeInsets.all(1.5), // Border radius
-        child: ClipOval(
-          child: Image.network(
-            widget.imageUrl,
-          ),
-        ),
+      child: CircleAvatar(
+        radius: 43,
+        backgroundImage: NetworkImage(widget.imageUrl),
+        backgroundColor: Colors.white,
       ),
     );
   }
