@@ -6,6 +6,7 @@ import 'package:resourse_app/features/edit_profile/bloc/edit_profile_bloc.dart';
 import 'package:resourse_app/repositories/models/users/user.dart';
 import 'package:resourse_app/repositories/models/users/user_update.dart';
 
+import '../../../repositories/bottom_msg/show_bottom_msg.dart';
 import '../../../repositories/user/user_repositories.dart';
 import '../../auth/widgets/button_for_auth_screen.dart';
 import '../widget/field_data_for_user.dart';
@@ -26,13 +27,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   UserAccount? _user;
 
   late final _editProfileBloc;
-
   late final _nameController;
-
   late final _descriptionController;
-
   late final _phoneController;
-
   late final _mailController;
   late final _uidController;
   late final _imageUlrController;
@@ -57,8 +54,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       name: _nameController.text,
       description: _descriptionController.text,
     );
-
-    print('Username : ${_nameController.text}' );
 
     _editProfileBloc.add(UploadDataProfileEvent(
       userUpdate: user,
@@ -85,6 +80,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     _phoneController.dispose();
     _mailController.dispose();
     _uidController.dispose();
+    _imageUlrController.dispose();
     super.dispose();
   }
 
@@ -103,10 +99,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         }
 
         if (state is EditProfileUpdatedState) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(state.msg.toString()),
-            ),
+          ShowBottomMsg().show(
+            ctx: context,
+            msg: state.msg,
+            buttonName: 'Вернуться в профиль',
+            countPop: 3,
           );
         }
       },

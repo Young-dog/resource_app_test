@@ -55,6 +55,8 @@ class _PassScreenState extends State<PassScreen> {
     _authBloc.add(AuthSignUpEvent(
       user: user,
     ));
+    int count = 0;
+    Navigator.of(context).popUntil((_) => count++ >= 2);
   }
 
   @override

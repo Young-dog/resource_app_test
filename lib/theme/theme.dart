@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 final darkTheme = ThemeData(
   appBarTheme: AppBarTheme(
-    backgroundColor: Colors.black,
+    backgroundColor: Color(0xFF131515),
     elevation: 0,
   ),
-  scaffoldBackgroundColor: Colors.black,
+  scaffoldBackgroundColor: Color(0xFF131515),
   splashColor: Colors.transparent,
   highlightColor: Colors.transparent,
   hoverColor: Colors.transparent,
