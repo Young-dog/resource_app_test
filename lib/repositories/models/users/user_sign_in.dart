@@ -8,4 +8,10 @@ class UserSignIn extends User {
 
   Future<void> signIn() async {}
 
+  @override
+  // TODO: implement props
+  List<Object?> get props => [
+        login,
+        password,
+      ];
 }
