@@ -72,7 +72,7 @@ class _ProfileScreenState extends State<ProfileScreen>
         appBar: _user == null
             ? null
             : AppBar(
-                title: const Text('username'),
+                title: Text(_user!.uniqueId.replaceAll('@', '').trim(),),
                 actions: [
                   //add post
                   IconButton(
