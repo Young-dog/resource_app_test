@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class ReelsScreen extends StatelessWidget {
   static const String id = 'reels_screen';
   const ReelsScreen({Key? key}) : super(key: key);

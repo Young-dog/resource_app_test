@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
+import 'package:equatable/equatable.dart';
 
 part 'user_account.dart';
+
 part 'user_sign_in.dart';
+
 part 'user_sign_up.dart';
 
-
-abstract class User{}
+abstract class User extends Equatable {}

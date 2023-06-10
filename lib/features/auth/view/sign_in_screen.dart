@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:resourse_app/features/auth/widgets/title.dart';
@@ -11,7 +13,6 @@ import '../widgets/pass_field.dart';
 part 'sign_up_screen.dart';
 
 part 'pass_screen.dart';
-
 class SignInScreen extends StatefulWidget {
   static const String id = 'sign_in_screen';
 
@@ -27,7 +28,6 @@ class _SignInScreenState extends State<SignInScreen> {
   late final FocusNode _passFocusNode;
 
   late final _authBloc;
-
   late final _emailController;
   late final _passController;
 

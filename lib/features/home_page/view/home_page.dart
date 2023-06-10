@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import '../../posts/post_screen.dart';
+import '../../profile/profile_screen.dart';
+import '../../reels/reels_screen.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
-import 'package:resourse_app/features/profile/view/profile_screen.dart';
-import 'package:resourse_app/features/reels/view/reels_screen.dart';
-import '../../posts/view/posts_screen.dart';
 
 class HomePage extends StatelessWidget {
   static const String id = 'home_page';
@@ -11,9 +11,9 @@ class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
 
+
   @override
   Widget build(BuildContext context) {
-
     List<Widget> buildScreens() {
       return [
         const PostsScreen(),
@@ -57,35 +57,29 @@ class HomePage extends StatelessWidget {
       screens: buildScreens(),
       items: navBarsItems(),
       confineInSafeArea: true,
-      backgroundColor: Colors.black,
-      // Default is Colors.white.
+      backgroundColor: const Color(0xFF131515),
       handleAndroidBackButtonPress: true,
-      // Default is true.
       resizeToAvoidBottomInset: true,
-      // This needs to be true if you want to move up the screen when keyboard appears. Default is true.
       stateManagement: true,
-      // Default is true.
       hideNavigationBarWhenKeyboardShows: true,
-      // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
-      decoration: NavBarDecoration(
-        borderRadius: BorderRadius.circular(10.0),
-        colorBehindNavBar: Colors.black54,
+      decoration: const NavBarDecoration(
+        border: Border(
+          top: BorderSide(width: 0.5, color: Colors.grey),
+        ),
       ),
       popAllScreensOnTapOfSelectedTab: true,
       popActionScreens: PopActionScreensType.all,
       itemAnimationProperties: const ItemAnimationProperties(
-        // Navigation Bar's items animation properties.
         duration: Duration(milliseconds: 200),
         curve: Curves.ease,
       ),
       screenTransitionAnimation: const ScreenTransitionAnimation(
-        // Screen transition animation on change of selected tab.
         animateTabTransition: true,
         curve: Curves.ease,
         duration: Duration(milliseconds: 200),
       ),
       navBarStyle:
-      NavBarStyle.style6, // Choose the nav bar style with this property.
+          NavBarStyle.style6,
     );
   }
 }
