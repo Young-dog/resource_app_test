@@ -14,4 +14,14 @@ class UserUpdate extends User {
     required this.name,
     required this.description,
   });
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [
+    imageUrl,
+    description,
+    phone,
+    mail,
+    name,
+  ];
 }

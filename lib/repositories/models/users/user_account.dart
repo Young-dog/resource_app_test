@@ -8,7 +8,6 @@ class UserAccount extends User {
   final String mail;
   final String uniqueId;
 
-
   UserAccount({
     required this.name,
     required this.mail,
@@ -17,4 +16,15 @@ class UserAccount extends User {
     required this.description,
     required this.phone,
   });
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [
+        name,
+        avatarUrl,
+        description,
+        phone,
+        mail,
+        uniqueId,
+      ];
 }

@@ -18,4 +18,15 @@ class UserSignUp extends User {
   });
 
   Future<void> signUp() async {}
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [
+    username,
+    password,
+    description,
+    phone,
+    mail,
+    uniqueId,
+  ];
 }

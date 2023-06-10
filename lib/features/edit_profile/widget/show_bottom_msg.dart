@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../features/auth/widgets/button_for_auth_screen.dart';
-import '../../theme/style_for_text.dart';
+import '../../auth/widgets/button_for_auth_screen.dart';
+import '../../../theme/style_for_text.dart';
 
 class ShowBottomMsg {
   void show({

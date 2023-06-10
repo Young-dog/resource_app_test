@@ -6,7 +6,7 @@ import 'package:resourse_app/features/edit_profile/bloc/edit_profile_bloc.dart';
 import 'package:resourse_app/repositories/models/users/user.dart';
 import 'package:resourse_app/repositories/models/users/user_update.dart';
 
-import '../../../repositories/bottom_msg/show_bottom_msg.dart';
+import '../widget/show_bottom_msg.dart';
 import '../../../repositories/user/user_repositories.dart';
 import '../../auth/widgets/button_for_auth_screen.dart';
 import '../widget/field_data_for_user.dart';
@@ -14,6 +14,7 @@ import '../widget/user_avatar.dart';
 
 class EditProfileScreen extends StatefulWidget {
   static const String id = 'edit_profile_screen';
+
 
   const EditProfileScreen({Key? key}) : super(key: key);
 
