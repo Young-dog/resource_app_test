@@ -2,8 +2,10 @@ import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:resourse_app/repositories/models/users/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:talker_flutter/talker_flutter.dart';
 
 part 'auth_event.dart';
 
@@ -22,7 +24,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         await auth.signInWithEmailAndPassword(
             email: user.login, password: user.password);
         emit(AuthLogInState());
-      } on FirebaseAuthException catch (e) {
+      } on FirebaseAuthException catch (e, st) {
         if (e.code == 'user-not-found') {
           emit(AuthFailureState(
               failureException: 'No user found for that email.'));
@@ -30,8 +32,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           emit(AuthFailureState(
               failureException: 'Wrong password provided for that user.'));
         }
-      } catch (error) {
+        GetIt.I<Talker>().handle(e, st);
+      } catch (error, st) {
         emit(AuthFailureState(failureException: error));
+        GetIt.I<Talker>().handle(error, st);
       }
     });
     on<AuthSignUpEvent>((event, emit) async {
@@ -54,7 +58,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           'imageAvatar': imageUrl,
         });
         emit(AuthLogInState());
-      } on FirebaseAuthException catch (e) {
+      } on FirebaseAuthException catch (e, st) {
         if (e.code == 'weak-password') {
           emit(AuthFailureState(
               failureException: 'The password provided is too weak.'));
@@ -62,8 +66,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           emit(AuthFailureState(
               failureException: 'The account already exists for that email.'));
         }
-      } catch (error) {
+        GetIt.I<Talker>().handle(e, st);
+      } catch (error, st) {
         emit(AuthFailureState(failureException: error));
+        GetIt.I<Talker>().handle(error, st);
       }
     });
     on<AuthLogOutEvent>((event, emit) async {
