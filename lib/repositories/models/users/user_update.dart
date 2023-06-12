@@ -2,10 +2,10 @@ import 'package:resourse_app/repositories/models/users/user.dart';
 
 class UserUpdate extends User {
   final String imageUrl;
-  final String phone;
-  final String mail;
+  final Map<String, dynamic> phone;
+  final Map<String, dynamic> mail;
   final String name;
-  final String description;
+  final Map<String, dynamic> description;
 
   UserUpdate({
     required this.imageUrl,

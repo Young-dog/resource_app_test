@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
 import 'package:flutter/material.dart';
+import 'package:resourse_app/features/confidentiality/confidentiality.dart';
 
 import '../../auth/bloc/auth_bloc.dart';
 import '../../edit_profile/edit_profile.dart';
@@ -41,7 +42,15 @@ class _SideBarState extends State<SideBar> {
               'Конфеденциальностть',
               style: widget.theme.bodySmall,
             ),
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).pop();
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ConfidentialityScreen(),
+                ),
+              );
+            },
           ),
           ListTile(
             title: Text(

@@ -126,10 +126,10 @@ class _ProfileScreenState extends State<ProfileScreen>
                               width: wh * 0.20,
                             ),
                             DescriptionsForProfile(
-                              name: snapshot.data?.name ?? '',
-                              phone: snapshot.data?.phone ?? '',
-                              description: snapshot.data?.description ?? '',
-                              mail: snapshot.data?.mail ?? '',
+                              name: _user!.name ?? '',
+                              phone: _user!.phone['number'] as String,
+                              description: _user!.description['data'] as String,
+                              mail: _user!.mail['e-mail'] as String,
                             ),
                           ],
                         );

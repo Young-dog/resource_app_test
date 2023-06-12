@@ -51,11 +51,20 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             .doc(userCredential.user!.uid)
             .set({
           'userId': user.uniqueId,
-          'mail': user.mail,
           'username': user.username,
-          'description': user.description,
-          'phone' : user.phone,
           'imageAvatar': imageUrl,
+          'mail': {
+            'e-mail' : user.mail,
+            'conf' : true,
+          },
+          'description': {
+            'data' : user.description,
+            'conf' : true,
+          },
+          'phone' : {
+            'number' : user.phone,
+            'conf' : true,
+          },
         });
         emit(AuthLogInState());
       } on FirebaseAuthException catch (e, st) {

@@ -3,9 +3,9 @@ part of 'user.dart';
 class UserAccount extends User {
   final String name;
   final String avatarUrl;
-  final String description;
-  final String phone;
-  final String mail;
+  final Map<String, dynamic> description;
+  final Map<String, dynamic> phone;
+  final Map<String, dynamic> mail;
   final String uniqueId;
 
   UserAccount({
