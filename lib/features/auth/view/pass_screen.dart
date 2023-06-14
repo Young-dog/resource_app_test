@@ -19,8 +19,9 @@ class _PassScreenState extends State<PassScreen> {
   Map<String, String>? dataUser;
 
   late final _authBloc;
-  late final _passController;
-  late final _repassController;
+  late final _passController = TextEditingController();
+
+  late final _repassController = TextEditingController();
 
   void _submit(BuildContext context) {
     FocusScope.of(context).unfocus();
@@ -37,6 +38,9 @@ class _PassScreenState extends State<PassScreen> {
       );
       return;
     }
+
+    print("Password - ${_passController.text}");
+    print("Repass - ${_repassController.text}");
 
     String? mail = dataUser!['login'];
     String? name = dataUser!['username'];
@@ -70,8 +74,6 @@ class _PassScreenState extends State<PassScreen> {
 
   @override
   void initState() {
-    _passController = TextEditingController();
-    _repassController = TextEditingController();
     _authBloc = context.read<AuthBloc>();
     _repassFocusNode = FocusNode();
     super.initState();

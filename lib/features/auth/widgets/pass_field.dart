@@ -47,6 +47,9 @@ class _PassFieldState extends State<PassField> {
         onSaved: (value) {
           widget.controller.text = value!;
         },
+        onChanged: (value) {
+          widget.controller.text = value;
+        },
         validator: (value) {
           if (value!.isEmpty) {
             return widget.error;

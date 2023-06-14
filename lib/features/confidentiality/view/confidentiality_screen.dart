@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:resourse_app/features/confidentiality/bloc/confidentiality_bloc.dart';
 
 import '../../../repositories/models/users/user.dart';
 import '../../../repositories/user/user_repositories.dart';
-import '../../../theme/style_for_text.dart';
 import '../widget/check_box_cf.dart';
 
 class ConfidentialityScreen extends StatefulWidget {
@@ -15,7 +16,7 @@ class ConfidentialityScreen extends StatefulWidget {
 }
 
 class _ConfidentialityScreenState extends State<ConfidentialityScreen> {
-  late bool phoneConf ;
+  late bool phoneConf;
   late bool mailConf;
   late bool dataConf;
 
@@ -24,6 +25,15 @@ class _ConfidentialityScreenState extends State<ConfidentialityScreen> {
   Future<void> _loadUser() async {
     _user = await UserRepositories().getUserData();
     setState(() {});
+    phoneConf = _user!.phone['conf'];
+    dataConf = _user!.description['conf'];
+    mailConf = _user!.mail['conf'];
+  }
+
+  @override
+  void initState() {
+    _loadUser();
+    super.initState();
   }
 
   @override
@@ -34,12 +44,53 @@ class _ConfidentialityScreenState extends State<ConfidentialityScreen> {
           title: const Text('Конфиденциальность'),
           centerTitle: true,
         ),
-        body: ListView(
-          children: [
-            CheckBoxCF(name: 'Телефон', valueConf: phoneConf,),
-            CheckBoxCF(name: 'E-mail', valueConf: mailConf,),
-            CheckBoxCF(name: 'О себе', valueConf: dataConf,),
-          ],
+        body: BlocConsumer<ConfidentialityBloc, ConfidentialityState>(
+          listener: (context, state) {
+            if (state is ConfidentialityErrorState) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    state.failureException.toString(),
+                  ),
+                ),
+              );
+            }
+          },
+          builder: (context, state) {
+            if (state is ConfidentialityLoadingState) {
+              return const Center(
+                child: CircularProgressIndicator(
+                  color: Colors.white,
+                ),
+              );
+            }
+
+            return _user != null ? ListView(
+              children: [
+                CheckBoxCF(
+                  name: 'Телефон',
+                  valueConf: phoneConf,
+                  data: _user!.phone['number'],
+                  sdName: 'number',
+                  nameKey: 'phone',
+                ),
+                CheckBoxCF(
+                  name: 'E-mail',
+                  valueConf: mailConf,
+                  data: _user!.mail['e-mail'],
+                  sdName: 'e-mail',
+                  nameKey: 'mail',
+                ),
+                CheckBoxCF(
+                  name: 'О себе',
+                  valueConf: dataConf,
+                  data: _user!.description['data'],
+                  sdName: 'data',
+                  nameKey: 'description',
+                ),
+              ],
+            ) : const Center(child: CircularProgressIndicator(color: Colors.white,));
+          },
         ),
       ),
     );

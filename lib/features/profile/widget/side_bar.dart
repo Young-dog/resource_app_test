@@ -39,7 +39,7 @@ class _SideBarState extends State<SideBar> {
           ),
           ListTile(
             title: Text(
-              'Конфеденциальностть',
+              'Конфеденциальность',
               style: widget.theme.bodySmall,
             ),
             onTap: () {

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:resourse_app/features/auth/auth_screen.dart';
+import 'package:resourse_app/features/confidentiality/bloc/confidentiality_bloc.dart';
 import 'package:resourse_app/features/edit_profile/bloc/edit_profile_bloc.dart';
 import 'package:resourse_app/theme/theme.dart';
 import 'package:resourse_app/utils/router/router.dart';
@@ -35,7 +36,10 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => EditProfileBloc(),
-        )
+        ),
+        BlocProvider(
+          create: (context) => ConfidentialityBloc(),
+        ),
       ],
       child: MaterialApp(
         theme: darkTheme,

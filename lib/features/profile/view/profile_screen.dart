@@ -117,19 +117,19 @@ class _ProfileScreenState extends State<ProfileScreen>
                       future: _loadUser(),
                       builder: (context, snapshot) {
                         return Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             UserImage(
                               imageUrl: snapshot.data?.avatarUrl ?? '',
                             ),
                             SizedBox(
-                              width: wh * 0.20,
+                              width: wh * 0.1,
                             ),
                             DescriptionsForProfile(
-                              name: _user!.name ?? '',
-                              phone: _user!.phone['number'] as String,
-                              description: _user!.description['data'] as String,
-                              mail: _user!.mail['e-mail'] as String,
+                              name: _user!.name,
+                              phone: _user!.phone,
+                              description: _user!.description,
+                              mail: _user!.mail,
                             ),
                           ],
                         );

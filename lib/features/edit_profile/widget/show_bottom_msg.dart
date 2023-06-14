@@ -34,7 +34,8 @@ class ShowBottomMsg {
                     color: Colors.transparent,
                     voidCallback: () {
                       int count = 0;
-                      Navigator.of(ctx).popUntil((_) => count++ >= countPop);
+                      Navigator.of(ctx).pop();
+                      Navigator.of(ctx).pop();
                     },
                     type: false,
                     theme: styleForButtonAuth,
