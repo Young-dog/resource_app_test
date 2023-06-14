@@ -15,7 +15,6 @@ import '../widget/user_avatar.dart';
 class EditProfileScreen extends StatefulWidget {
   static const String id = 'edit_profile_screen';
 
-
   const EditProfileScreen({Key? key}) : super(key: key);
 
   @override
@@ -38,9 +37,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Future<void> _loadUser() async {
     _user = await UserRepositories().getUserData();
     _nameController.text = _user!.name;
-    _descriptionController.text = _user!.description;
-    _phoneController.text = _user!.phone;
-    _mailController.text = _user!.mail;
+    _descriptionController.text = _user!.description['data'];
+    _phoneController.text = _user!.phone['number'];
+    _mailController.text = _user!.mail['e-mail'];
     _uidController.text = _user!.uniqueId;
     setState(() {});
   }
@@ -50,10 +49,19 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
     final user = UserUpdate(
       imageUrl: _imageUlrController.text,
-      phone: _phoneController.text,
-      mail: _mailController.text,
+      phone: {
+        'number': _phoneController.text,
+        'conf': _user!.phone['conf'],
+      },
+      mail: {
+        'e-mail': _mailController.text,
+        'conf': _user!.mail['conf'],
+      },
       name: _nameController.text,
-      description: _descriptionController.text,
+      description: {
+        'data': _descriptionController.text,
+        'conf': _user!.description['conf'],
+      },
     );
 
     _editProfileBloc.add(UploadDataProfileEvent(
@@ -118,7 +126,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         }
         return SafeArea(
           child: Scaffold(
-            appBar: AppBar(),
+            appBar: AppBar(
+              title: Text('Редактирование профиля'),
+              centerTitle: true,
+            ),
             body: _user == null
                 ? const Center(
                     child: CircularProgressIndicator(),

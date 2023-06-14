@@ -16,7 +16,7 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
       emit(EditProfileLoadingState());
       final user = event.userUpdate;
       final globalUser = FirebaseAuth.instance.currentUser;
-      if (user.imageUrl!.isEmpty) {
+      if (user.imageUrl.isEmpty) {
         await FirebaseFirestore.instance
             .collection('users')
             .doc(globalUser!.uid)
@@ -35,10 +35,19 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
             .collection('users')
             .doc(globalUser!.uid)
             .update({
-          'description': user.description,
+          'description': {
+            'data' : user.description['data'],
+            'conf' : user.description['conf'],
+          },
           'imageAvatar': user.imageUrl,
-          'mail': user.mail,
-          'phone': user.phone,
+          'mail': {
+            'e-mail' : user.mail['e-mail'],
+            'conf' : user.mail['conf'],
+          },
+          'phone': {
+            'number' : user.phone['number'],
+            'conf' : user.phone['conf'],
+          },
           'username': user.name,
         }).then((value) {
           emit(EditProfileUpdatedState(msg: 'Данные обновлены'));
