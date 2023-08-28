@@ -26,7 +26,7 @@ class ConfirmPassword
       return ConfirmPasswordValidationError.empty;
     }
 
-    if (value != original) {
+    if (!isEmpty && !(value == original)) {
       return ConfirmPasswordValidationError.notMatch;
     }
 

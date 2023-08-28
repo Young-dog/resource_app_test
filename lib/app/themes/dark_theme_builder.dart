@@ -51,11 +51,22 @@ class DarkThemeBuilder implements ThemeBuilder {
       appBarTheme: _buildAppBarTheme(
         palette: palette,
       ),
+      snackBarTheme: _buildSnackBarTheme(insets: spacings, textTheme: textTheme),
       extensions: [
         palette,
         radiuses,
         spacings,
       ],
+    );
+  }
+
+  SnackBarThemeData _buildSnackBarTheme({
+    required Spacings insets,
+    required TextTheme textTheme,
+  }) {
+    return SnackBarThemeData(
+      contentTextStyle: textTheme.bodySmall,
+      insetPadding: EdgeInsets.symmetric(horizontal: insets.x4),
     );
   }
 

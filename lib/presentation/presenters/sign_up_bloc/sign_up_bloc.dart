@@ -1,8 +1,10 @@
 import 'package:equatable/equatable.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:get_it/get_it.dart';
 import '../../../core/core.dart';
 import '../../../domain/domain.dart';
+import '../../presentation.dart';
 
 part 'sign_up_event.dart';
 
@@ -99,9 +101,18 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   }
 
   void _inputPassword(
-      InputPasswordEvent event,
-      Emitter<SignUpState> emit,
-      ) {
+    InputPasswordEvent event,
+    Emitter<SignUpState> emit,
+  ) {
+    if (!state.formStatusFirst.isValidated) {
+      GetIt.instance<SnackBarService>().show(
+        snackBar: ErrorSnackBar(
+          exception: IncorrectDataException(),
+        ),
+      );
+      return;
+    }
+
     emit(
       state.copyWith(
         status: SignUpStatus.inputPass,
@@ -114,6 +125,11 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     Emitter<SignUpState> emit,
   ) async {
     if (!state.formStatusSecond.isValidated) {
+      GetIt.instance<SnackBarService>().show(
+        snackBar: ErrorSnackBar(
+          exception: PasswordsNotMatchException(),
+        ),
+      );
       return;
     }
 
@@ -132,6 +148,19 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
           status: SignUpStatus.success,
         ),
       );
+    } on FirebaseAuthException catch (exception) {
+      if (exception.code == 'email-already-in-use') {
+        GetIt.instance<SnackBarService>().show(
+          snackBar: ErrorSnackBar(
+            exception: UserAlreadyAddedException(),
+          ),
+        );
+      }
+      emit(
+        state.copyWith(
+          status: SignUpStatus.failure,
+        ),
+      );
     } on Exception {
       emit(
         state.copyWith(
@@ -142,9 +171,9 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   }
 
   Future<void> _signUpWithGoogle(
-      SignUpWithGoogleEvent event,
-      Emitter<SignUpState> emit,
-      ) async {
+    SignUpWithGoogleEvent event,
+    Emitter<SignUpState> emit,
+  ) async {
     try {
       await _authRepository.logInWithGoogle();
       emit(

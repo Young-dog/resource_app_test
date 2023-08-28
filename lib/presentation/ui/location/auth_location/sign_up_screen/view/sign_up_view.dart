@@ -15,7 +15,6 @@ class SignUpView extends StatelessWidget {
 
     return BlocBuilder<SignUpBloc, SignUpState>(
       builder: (context, state) {
-        print(state.newPassword);
         return ListView(
           shrinkWrap: true,
           physics: const BouncingScrollPhysics(),

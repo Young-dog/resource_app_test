@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../../../app/app.dart';
 import '../../../../../../generated/l10n.dart';
-import '../../../../../../resourse_app.dart';
+import '../../../../../presentation.dart';
 import '../widgets/widgets.dart';
 
 class SignInView extends StatelessWidget {

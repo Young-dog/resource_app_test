@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get_it/get_it.dart';
 import 'package:talker_flutter/talker_flutter.dart';
-import '../domain/domain.dart';
+import '../core/core.dart';
 import '../generated/l10n.dart';
-import '../presentation/presentation.dart';
-import 'router/router.dart';
-import 'themes/dark_theme_builder.dart';
+import 'app.dart';
 
 class Resourse extends StatelessWidget {
   Resourse({super.key});
@@ -16,10 +13,7 @@ class Resourse extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (context) => LogInBloc(authRepository:  AuthRepositoryImpl()),),
-      ],
+    return GlobalBlocInjector(
       child: MaterialApp.router(
         localizationsDelegates: const [
           S.delegate,
@@ -36,6 +30,7 @@ class Resourse extends StatelessWidget {
         locale: const Locale('ru'),
         supportedLocales: S.delegate.supportedLocales,
         theme: const DarkThemeBuilder().build(),
+        scaffoldMessengerKey: GetIt.instance<SnackBarService>(),
       ),
     );
   }

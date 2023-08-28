@@ -259,6 +259,66 @@ class S {
       args: [],
     );
   }
+
+  /// `Неверный e-mail и/или пароль`
+  String get invalidUserCredentialError {
+    return Intl.message(
+      'Неверный e-mail и/или пароль',
+      name: 'invalidUserCredentialError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Некорректный email и/или имя пользователя`
+  String get incorrectDataError {
+    return Intl.message(
+      'Некорректный email и/или имя пользователя',
+      name: 'incorrectDataError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Пароли не совпадают и/или не соответсвуют требованиям`
+  String get passwordsNotMatchError {
+    return Intl.message(
+      'Пароли не совпадают и/или не соответсвуют требованиям',
+      name: 'passwordsNotMatchError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Отсутсвует сетевое соединение`
+  String get missingConnectionError {
+    return Intl.message(
+      'Отсутсвует сетевое соединение',
+      name: 'missingConnectionError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Произошла ошибка`
+  String get defaultErrorMessage {
+    return Intl.message(
+      'Произошла ошибка',
+      name: 'defaultErrorMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Учетная запись с данным e-mail уже зарегистрирована в системе`
+  String get userAlreadyError {
+    return Intl.message(
+      'Учетная запись с данным e-mail уже зарегистрирована в системе',
+      name: 'userAlreadyError',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

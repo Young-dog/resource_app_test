@@ -28,6 +28,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Повторите пароль"),
         "continueButtonTitle":
             MessageLookupByLibrary.simpleMessage("Продолжить"),
+        "defaultErrorMessage":
+            MessageLookupByLibrary.simpleMessage("Произошла ошибка"),
         "descriptionResetPassword": MessageLookupByLibrary.simpleMessage(
             "Напишите электронную почту. Мы отправим инструкции по сбросу пароля."),
         "emailLabel": MessageLookupByLibrary.simpleMessage("E-mail"),
@@ -35,10 +37,18 @@ class MessageLookup extends MessageLookupByLibrary {
             "На указанный e-mail была отправлена ссылка для подтверждения адреса электронной почты. Перейдите по ней и подтвердите ваши учетные данные"),
         "goBackButtonTitle":
             MessageLookupByLibrary.simpleMessage("Вернуться назад"),
+        "incorrectDataError": MessageLookupByLibrary.simpleMessage(
+            "Некорректный email и/или имя пользователя"),
+        "invalidUserCredentialError": MessageLookupByLibrary.simpleMessage(
+            "Неверный e-mail и/или пароль"),
+        "missingConnectionError": MessageLookupByLibrary.simpleMessage(
+            "Отсутсвует сетевое соединение"),
         "orTitle": MessageLookupByLibrary.simpleMessage("или"),
         "passDescription": MessageLookupByLibrary.simpleMessage(
             "Минимальная длина пароля 7 символов\nПароль должен содержать буквы верхнего и нижнего регистра, цифры или специальные символы"),
         "passwordLabel": MessageLookupByLibrary.simpleMessage("Пароль"),
+        "passwordsNotMatchError": MessageLookupByLibrary.simpleMessage(
+            "Пароли не совпадают и/или не соответсвуют требованиям"),
         "reSubmitTitle":
             MessageLookupByLibrary.simpleMessage("Отправить повторно"),
         "reVerificationDescription": MessageLookupByLibrary.simpleMessage(
@@ -57,6 +67,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "successSubmitResetTitle": MessageLookupByLibrary.simpleMessage(
             "На указанный e-mail была отправлена ссылка для  восстановления. Перейдите по ней и придумайте новый пароль"),
         "titleApp": MessageLookupByLibrary.simpleMessage("Resourse"),
+        "userAlreadyError": MessageLookupByLibrary.simpleMessage(
+            "Учетная запись с данным e-mail уже зарегистрирована в системе"),
         "usernameLabel":
             MessageLookupByLibrary.simpleMessage("Отображаемое имя")
       };

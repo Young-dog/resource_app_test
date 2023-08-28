@@ -1,7 +1,8 @@
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../../../resourse_app.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../core/core.dart';
+import '../../../domain/domain.dart';
 
 part 'reset_password_event.dart';
 

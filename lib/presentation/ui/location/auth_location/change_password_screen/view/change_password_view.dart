@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../../../../../app/app.dart';
 import '../../../../../../generated/l10n.dart';
 import '../../../../../presentation.dart';
-import '../widgets/change_password_button.dart';
+import '../widgets/widgets.dart';
 
 class ChangePasswordView extends StatelessWidget {
   const ChangePasswordView({super.key});

@@ -1,8 +1,10 @@
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../../resourse_app.dart';
+import 'package:get_it/get_it.dart';
+import '../../../core/core.dart';
+import '../../../domain/domain.dart';
+import '../../presentation.dart';
 
 part 'log_in_event.dart';
 
@@ -92,7 +94,26 @@ class LogInBloc extends Bloc<LogInEvent, LogInState> {
           );
         }
       }
+    } on FirebaseAuthException catch (exception) {
+      if (exception.code == 'user-not-found' ||
+          exception.code == 'wrong-password') {
+        GetIt.instance<SnackBarService>().show(
+          snackBar: ErrorSnackBar(
+            exception: InvalidUserCredentialException(),
+          ),
+        );
+      }
+      emit(
+        state.copyWith(
+          status: LogInStatus.failure,
+        ),
+      );
     } on Exception {
+      GetIt.instance<SnackBarService>().show(
+        snackBar: ErrorSnackBar(
+          exception: Exception(),
+        ),
+      );
       emit(
         state.copyWith(
           status: LogInStatus.failure,

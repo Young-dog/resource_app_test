@@ -1,11 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../../../../app/app.dart';
 import '../../../../presentation.dart';
 import 'view/reset_password_view.dart';
-import 'view/success_submit_reset_view.dart';
+import 'view/view.dart';
 
 @RoutePage()
 class ResetPasswordScreen extends StatelessWidget {
@@ -16,7 +17,7 @@ class ResetPasswordScreen extends StatelessWidget {
     final theme = Theme.of(context);
 
     return BlocProvider(
-      create: (context) => ResetPasswordBloc(),
+      create: (context) => GetIt.instance<ResetPasswordBloc>(),
       child: GestureDetector(
         onTap: () {
           FocusScope.of(context).unfocus();

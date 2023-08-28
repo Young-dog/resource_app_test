@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../../../app/app.dart';
 import '../../../../../../generated/l10n.dart';
-import '../../../../../../resourse_app.dart';
+import '../../../../../presentation.dart';
 
 class SuccessSubmitResetView extends StatelessWidget {
   const SuccessSubmitResetView({super.key});

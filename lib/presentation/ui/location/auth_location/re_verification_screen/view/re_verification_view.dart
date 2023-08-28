@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-
 import '../../../../../../app/app.dart';
 import '../../../../../../generated/l10n.dart';
-import '../widgets/submit_verification_button.dart';
+import '../widgets/widgets.dart';
 
 class ReVerificationView extends StatelessWidget {
   const ReVerificationView({super.key});

@@ -1,9 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:get_it/get_it.dart';
 import '../../../../../app/app.dart';
-import '../../../../../domain/domain.dart';
 import '../../../../presentation.dart';
 import 'view/view.dart';
 
@@ -15,7 +14,7 @@ class SignUpScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return BlocProvider(
-      create: (context) => SignUpBloc(authRepository: AuthRepositoryImpl()),
+      create: (context) => GetIt.instance<SignUpBloc>(),
       child: GestureDetector(
         onTap: () {
           FocusScope.of(context).unfocus();

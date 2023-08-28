@@ -14,10 +14,8 @@ class ContinueButton extends StatelessWidget {
     return BlocBuilder<SignUpBloc, SignUpState>(
       builder: (context, state) {
 
-        final isRight = state.formStatusFirst.isValidated;
-
         return PrimaryButton(
-          onPressed: !isRight ? null : () {
+          onPressed: () {
             context.read<SignUpBloc>().add(const InputPasswordEvent());
           },
           child: Text(
