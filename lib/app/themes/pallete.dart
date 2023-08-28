@@ -11,6 +11,7 @@ class Palette extends ThemeExtension<Palette> {
     required this.borderSecondary,
     required this.textTertiary,
     required this.buttonSecondary,
+    required this.iconSecondary,
   });
 
   const Palette.dark()
@@ -26,6 +27,7 @@ class Palette extends ThemeExtension<Palette> {
           textTertiary: const Color(0xFF6c757d),
           //Icon
           iconPrimary: const Color(0xFFffffff),
+          iconSecondary: const Color(0xFF6c757d),
           //Border
           borderPrimary: const Color(0xFFffffff),
           borderSecondary: const Color(0xFF6c757d),
@@ -45,6 +47,7 @@ class Palette extends ThemeExtension<Palette> {
 
   //Icon
   final Color iconPrimary;
+  final Color iconSecondary;
 
   //Border
   final Color borderPrimary;
@@ -61,6 +64,7 @@ class Palette extends ThemeExtension<Palette> {
     Color? borderSecondary,
     Color? textTertiary,
     Color? buttonSecondary,
+    Color? iconSecondary,
   }) {
     return Palette(
       // Background
@@ -74,6 +78,7 @@ class Palette extends ThemeExtension<Palette> {
       textTertiary: textTertiary ?? this.textTertiary,
       //Icon
       iconPrimary: iconPrimary ?? this.iconPrimary,
+      iconSecondary: iconSecondary ?? this.iconSecondary,
       //Border
       borderPrimary: borderPrimary ?? this.borderPrimary,
       borderSecondary: borderSecondary ?? this.borderSecondary,
@@ -98,6 +103,7 @@ class Palette extends ThemeExtension<Palette> {
       textTertiary: Color.lerp(textTertiary, other.textTertiary, t)!,
       //Icon
       iconPrimary: Color.lerp(iconPrimary, other.iconPrimary, t)!,
+      iconSecondary: Color.lerp(iconSecondary, other.iconSecondary, t)!,
       //Border
       borderPrimary: Color.lerp(borderPrimary, other.borderPrimary, t)!,
       borderSecondary: Color.lerp(borderSecondary, other.borderSecondary, t)!,
