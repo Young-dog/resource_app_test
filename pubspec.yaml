@@ -29,6 +29,7 @@ dependencies:
   formz: ^0.6.0
   intl: ^0.18.0
   auto_route: ^7.8.0
+  font_awesome_flutter: 10.4.0
 
 dev_dependencies:
   flutter_test:
