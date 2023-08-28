@@ -1,0 +1,63 @@
+// DO NOT EDIT. This is code generated via package:intl/generate_localized.dart
+// This is a library that provides messages for a ru locale. All the
+// messages from the main program should be duplicated here with the same
+// function name.
+
+// Ignore issues from commonly used lints in this file.
+// ignore_for_file:unnecessary_brace_in_string_interps, unnecessary_new
+// ignore_for_file:prefer_single_quotes,comment_references, directives_ordering
+// ignore_for_file:annotate_overrides,prefer_generic_function_type_aliases
+// ignore_for_file:unused_import, file_names, avoid_escaping_inner_quotes
+// ignore_for_file:unnecessary_string_interpolations, unnecessary_string_escapes
+
+import 'package:intl/intl.dart';
+import 'package:intl/message_lookup_by_library.dart';
+
+final messages = new MessageLookup();
+
+typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
+
+class MessageLookup extends MessageLookupByLibrary {
+  String get localeName => 'ru';
+
+  final messages = _notInlinedMessages(_notInlinedMessages);
+  static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "changePaswordButtonTitle":
+            MessageLookupByLibrary.simpleMessage("Изменить пароль"),
+        "confirmPasswordLabel":
+            MessageLookupByLibrary.simpleMessage("Повторите пароль"),
+        "continueButtonTitle":
+            MessageLookupByLibrary.simpleMessage("Продолжить"),
+        "descriptionResetPassword": MessageLookupByLibrary.simpleMessage(
+            "Напишите электронную почту. Мы отправим инструкции по сбросу пароля."),
+        "emailLabel": MessageLookupByLibrary.simpleMessage("E-mail"),
+        "emailVerifyDescription": MessageLookupByLibrary.simpleMessage(
+            "На указанный e-mail была отправлена ссылка для подтверждения адреса электронной почты. Перейдите по ней и подтвердите ваши учетные данные"),
+        "goBackButtonTitle":
+            MessageLookupByLibrary.simpleMessage("Вернуться назад"),
+        "orTitle": MessageLookupByLibrary.simpleMessage("или"),
+        "passDescription": MessageLookupByLibrary.simpleMessage(
+            "Минимальная длина пароля 7 символов\nПароль должен содержать буквы верхнего и нижнего регистра, цифры или специальные символы"),
+        "passwordLabel": MessageLookupByLibrary.simpleMessage("Пароль"),
+        "reSubmitTitle":
+            MessageLookupByLibrary.simpleMessage("Отправить повторно"),
+        "reVerificationDescription": MessageLookupByLibrary.simpleMessage(
+            "Раннее на указанный e-mail мы отправляли письмо с просьбой подтвердить адрес электронной почты. К сожаленнию подтверждение так и не поступило. Если по какой-то причине вы не получили данное письмо, запросите повторную отправку"),
+        "resetPasswordButtonTitle":
+            MessageLookupByLibrary.simpleMessage("забыли пароль?"),
+        "signInButtonTitle": MessageLookupByLibrary.simpleMessage("Войти"),
+        "signInWithgoogleButtonTitle":
+            MessageLookupByLibrary.simpleMessage("Войти с помощью google"),
+        "signUpButtonTitle":
+            MessageLookupByLibrary.simpleMessage("Зарегистрироваться"),
+        "signUpWithGoogleButtonTitle": MessageLookupByLibrary.simpleMessage(
+            "Зарегистрироваться с помощью Google"),
+        "submitResetPassButtonTitle":
+            MessageLookupByLibrary.simpleMessage("Сбросить пароль"),
+        "successSubmitResetTitle": MessageLookupByLibrary.simpleMessage(
+            "На указанный e-mail была отправлена ссылка для  восстановления. Перейдите по ней и придумайте новый пароль"),
+        "titleApp": MessageLookupByLibrary.simpleMessage("Resourse"),
+        "usernameLabel":
+            MessageLookupByLibrary.simpleMessage("Отображаемое имя")
+      };
+}

@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "911264404722",
+    "firebase_url": "https://resourse-app-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "resourse-app",
     "storage_bucket": "resourse-app.appspot.com"
   },
@@ -14,7 +15,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "911264404722-hfe4j734a2gbg804sa40k201eg8bhahh.apps.googleusercontent.com",
+          "client_id": "911264404722-p126ml6umbaaqqf5bcieju61vn220a4i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.resourse_app",
+            "certificate_hash": "201b20f6365fe489c4dc234cd60c162118fce985"
+          }
+        },
+        {
+          "client_id": "911264404722-oesv82p9avtkcu7lavp2olj9vej5jls1.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -29,6 +38,13 @@
             {
               "client_id": "911264404722-hfe4j734a2gbg804sa40k201eg8bhahh.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "911264404722-360ifiuhn3i2624vjemeh119t4qrvp0b.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.resourseApp"
+              }
             }
           ]
         }

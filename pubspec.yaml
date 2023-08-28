@@ -11,35 +11,40 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
   cupertino_icons: ^1.0.2
   flutter_bloc: ^8.1.2
   firebase_core: ^2.13.0
   firebase_auth: ^4.6.1
   cloud_firestore: ^4.7.1
+  google_sign_in: ^6.1.4
   equatable: ^2.0.5
   flutter_svg: ^2.0.6
-  persistent_bottom_nav_bar: ^5.0.2
   dio: ^5.1.2
   image_picker: ^0.8.7+5
   firebase_storage: ^11.2.1
   talker_flutter: ^3.1.1
   get_it: ^7.6.0
+  formz: ^0.6.0
+  intl: ^0.18.0
+  auto_route: ^7.8.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
+  auto_route_generator: ^7.3.1
+  build_runner: ^2.4.6
 
 flutter:
   uses-material-design: true
 
-  # To add assets to your application, add an assets section, like this:
   assets:
     - assets/icons/home.svg
     - assets/icons/profile.svg
     - assets/icons/reels.svg
     - assets/images/profile.png
-
 
   fonts:
     - family: BrunoAceSC
@@ -54,6 +59,5 @@ flutter:
     - family: OpenSans
       fonts:
         - asset: assets/fonts/OpenSans-VariableFont_wdth,wght.ttf
-
-  # For details regarding fonts from package dependencies,
-  # see https://flutter.dev/custom-fonts/#from-packages
+flutter_intl:
+  enabled: true

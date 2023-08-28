@@ -1,0 +1,238 @@
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'themes.dart';
+
+class DarkThemeBuilder implements ThemeBuilder {
+  const DarkThemeBuilder();
+
+  @override
+  ThemeData build({
+    Radiuses radiuses = const Radiuses.regular(),
+    Spacings spacings = const Spacings.regular(),
+  }) {
+    const palette = Palette.dark();
+
+    const fontFamily = 'Ysabeau';
+
+    final textTheme = _defaultTextTheme.apply(
+      bodyColor: palette.textPrimary,
+      displayColor: palette.textPrimary,
+    );
+
+    final defaultTextTheme = _buildDefaultTextTheme(
+      fontFamily: fontFamily,
+      defaultColor: palette.textPrimary,
+    );
+
+    return ThemeData(
+      useMaterial3: true,
+      colorSchemeSeed: palette.buttonPrimary,
+      brightness: Brightness.light,
+      scaffoldBackgroundColor: palette.bgPrimary,
+      textTheme: textTheme,
+      elevatedButtonTheme: _buildElevatedButtonTheme(
+        palette: palette,
+        insets: spacings,
+        radiuses: radiuses,
+        textTheme: defaultTextTheme,
+      ),
+      outlinedButtonTheme: _buildOutlinedButtonTheme(
+        palette: palette,
+        insets: spacings,
+        radiuses: radiuses,
+        textTheme: defaultTextTheme,
+      ),
+      textButtonTheme: _buildTextButtonTheme(
+        palette: palette,
+        insets: spacings,
+        radiuses: radiuses,
+        textTheme: defaultTextTheme,
+      ),
+      appBarTheme: _buildAppBarTheme(
+        palette: palette,
+      ),
+      extensions: [
+        palette,
+        radiuses,
+        spacings,
+      ],
+    );
+  }
+
+  TextTheme _buildDefaultTextTheme({
+    required String fontFamily,
+    required Color defaultColor,
+  }) {
+    final platform = defaultTargetPlatform;
+    final typography = Typography.material2021(platform: platform);
+    final textTheme = typography.white.merge(typography.englishLike).apply(
+          bodyColor: defaultColor,
+          displayColor: defaultColor,
+          fontFamily: fontFamily,
+        );
+
+    return textTheme;
+  }
+
+  ElevatedButtonThemeData _buildElevatedButtonTheme({
+    required Palette palette,
+    required Spacings insets,
+    required Radiuses radiuses,
+    required TextTheme textTheme,
+  }) {
+    return ElevatedButtonThemeData(
+      style: ButtonStyle(
+        shape: MaterialStateProperty.all(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(radiuses.x3),
+          ),
+        ),
+        backgroundColor: MaterialStateColor.resolveWith(
+          (Set<MaterialState> states) {
+            return palette.buttonPrimary;
+          },
+        ),
+        foregroundColor: MaterialStateColor.resolveWith(
+          (Set<MaterialState> states) {
+            return palette.textSecondary;
+          },
+        ),
+        textStyle: MaterialStateProperty.all(
+          textTheme.bodyLarge,
+        ),
+      ),
+    );
+  }
+
+  OutlinedButtonThemeData _buildOutlinedButtonTheme({
+    required Palette palette,
+    required Spacings insets,
+    required Radiuses radiuses,
+    required TextTheme textTheme,
+  }) {
+    return OutlinedButtonThemeData(
+      style: ButtonStyle(
+        shape: MaterialStateProperty.all(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(radiuses.x3),
+          ),
+        ),
+        backgroundColor: MaterialStateColor.resolveWith(
+          (Set<MaterialState> states) {
+            return palette.buttonSecondary;
+          },
+        ),
+        foregroundColor: MaterialStateColor.resolveWith(
+          (Set<MaterialState> states) {
+            return palette.textPrimary;
+          },
+        ),
+        textStyle: MaterialStateProperty.all(
+          textTheme.bodyLarge,
+        ),
+      ),
+    );
+  }
+
+  TextButtonThemeData _buildTextButtonTheme({
+    required Palette palette,
+    required Spacings insets,
+    required Radiuses radiuses,
+    required TextTheme textTheme,
+  }) {
+    return TextButtonThemeData(
+      style: ButtonStyle(
+        shape: MaterialStateProperty.all(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(radiuses.x2),
+          ),
+        ),
+        padding: MaterialStateProperty.all(
+          EdgeInsets.zero,
+        ),
+        foregroundColor: MaterialStateColor.resolveWith(
+          (Set<MaterialState> states) {
+            return palette.buttonPrimary;
+          },
+        ),
+        textStyle: MaterialStateProperty.all(
+          textTheme.bodyMedium,
+        ),
+      ),
+    );
+  }
+
+  AppBarTheme _buildAppBarTheme({
+    required Palette palette,
+  }) {
+    return AppBarTheme(
+      backgroundColor: palette.bgPrimary,
+      surfaceTintColor: palette.bgPrimary,
+      iconTheme: IconThemeData(color: palette.iconPrimary),
+    );
+  }
+
+  TextTheme get _defaultTextTheme => const TextTheme(
+        displayLarge: TextStyle(),
+        displayMedium: TextStyle(),
+        displaySmall: TextStyle(),
+        headlineLarge: TextStyle(),
+        headlineMedium: TextStyle(),
+        headlineSmall: TextStyle(),
+        titleLarge: TextStyle(
+          fontFamily: 'BrunoAceSC',
+          fontSize: 35,
+          height: 28 / 20,
+          fontWeight: FontWeight.w800,
+        ),
+        titleMedium: TextStyle(
+          fontFamily: 'BrunoAceSC',
+          fontSize: 30,
+          height: 24 / 18,
+          fontWeight: FontWeight.w500,
+        ),
+        titleSmall: TextStyle(
+          fontFamily: 'BrunoAceSC',
+          fontSize: 25,
+          height: 20 / 14,
+          fontWeight: FontWeight.w500,
+        ),
+        labelLarge: TextStyle(
+          fontFamily: 'Caveat',
+          fontSize: 20,
+          height: 20 / 14,
+          fontWeight: FontWeight.w500,
+        ),
+        labelMedium: TextStyle(
+          fontFamily: 'Caveat',
+          fontSize: 16,
+          height: 16 / 12,
+          letterSpacing: 0.5,
+          fontWeight: FontWeight.w500,
+        ),
+        labelSmall: TextStyle(
+          fontFamily: 'Caveat',
+          fontSize: 12,
+          height: 16 / 11,
+          letterSpacing: 0,
+          fontWeight: FontWeight.w500,
+        ),
+        bodyLarge: TextStyle(
+          fontSize: 24,
+          height: 24 / 16,
+          fontWeight: FontWeight.w400,
+        ),
+        bodyMedium: TextStyle(
+          fontSize: 20,
+          height: 20 / 14,
+          letterSpacing: 0.25,
+          fontWeight: FontWeight.w400,
+        ),
+        bodySmall: TextStyle(
+          fontSize: 16,
+          height: 16 / 12,
+          letterSpacing: 0.4,
+          fontWeight: FontWeight.w400,
+        ),
+      );
+}

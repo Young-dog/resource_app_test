@@ -1,0 +1,23 @@
+{
+  "titleApp": "Resourse",
+  "emailLabel": "E-mail",
+  "resetPasswordButtonTitle": "forgot your password?",
+  "passwordLabel": "Password",
+  "signInButtonTitle": "Log in",
+  "signUpButtonTitle": "Sign up",
+  "signInWithgoogleButtonTitle": "Log in using Google",
+  "usernameLabel": "username",
+  "confirmPasswordLabel": "Repeat the password",
+  "continueButtonTitle": "Continue",
+  "orTitle": "or",
+  "signUpWithGoogleButtonTitle": "Register with Google",
+  "passDescription": "The minimum password length is 7 characters\nThe password must contain uppercase and lowercase letters, numbers, or special characters",
+  "submitResetPassButtonTitle": "Reset Password",
+  "descriptionResetPassword": "Write an email. We will send instructions on how to reset your password.",
+  "goBackButtonTitle": "Go back",
+  "successSubmitResetTitle": "На указанный e-mail была отправлена ссылка для  восстановления. Перейдите по ней и придумайте новый пароль",
+  "changePaswordButtonTitle": "Изменить пароль",
+  "emailVerifyDescription": "На указанный e-mail была отправлена ссылка для подтверждения адреса электронной почты. Перейдите по ней и подтвердите ваши учетные данные",
+  "reSubmitTitle": "Отправить повторно",
+  "reVerificationDescription": "Раннее на указанный e-mail мы отправляли письмо с просьбой подтвердить адрес электронной почты. К сожаленнию подтверждение так и не поступило. Если по какой-то причине вы не получили данное письмо, запросите повторную отправку"
+}
