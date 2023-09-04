@@ -1,5 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import '../../data/data.dart';
 
 abstract class AuthRepository {
   const AuthRepository();
@@ -12,6 +12,7 @@ abstract class AuthRepository {
   Future<void> signUp({
     required String email,
     required String password,
+    required String username,
   });
 
   Future<void> logInWithGoogle();
@@ -24,14 +25,22 @@ abstract class AuthRepository {
 }
 
 class AuthRepositoryImpl extends AuthRepository {
+  AuthRepositoryImpl({
+    required RemoteAuthDataSource remoteAuthDataSource,
+  }) : _remoteAuthDataSource = remoteAuthDataSource;
+
+  final RemoteAuthDataSource _remoteAuthDataSource;
+
   @override
   Future<UserCredential> logIn({
     required String email,
     required String password,
   }) async {
-    final user = await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: email,
-      password: password,
+    final user = await _remoteAuthDataSource.logIn(
+      request: SignInRequestDto(
+        email: email,
+        password: password,
+      ),
     );
 
     return user;
@@ -39,41 +48,33 @@ class AuthRepositoryImpl extends AuthRepository {
 
   @override
   Future<void> logInWithGoogle() async {
-    final googleUser = await GoogleSignIn().signIn();
-
-    final googleAuth = await googleUser?.authentication;
-
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth?.accessToken,
-      idToken: googleAuth?.idToken,
-    );
-
-    await FirebaseAuth.instance.signInWithCredential(credential);
+    await _remoteAuthDataSource.logInWithGoogle();
   }
 
   @override
-  Future<void> logOut() {
-    // TODO: implement signOut
-    throw UnimplementedError();
+  Future<void> logOut() async {
+    await _remoteAuthDataSource.logOut();
   }
 
   @override
   Future<void> signUp({
     required String email,
     required String password,
+    required String username,
   }) async {
-    final user = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-      email: email,
-      password: password,
+    await _remoteAuthDataSource.signUp(
+      request: SignUpRequestDto(
+        email: email,
+        password: password,
+        username: username,
+      ),
     );
-
-    await user.user?.sendEmailVerification();
   }
 
   @override
   Future<void> reSubmitVerification({
     required UserCredential user,
   }) async {
-    await user.user!.sendEmailVerification();
+    await _remoteAuthDataSource.reSubmitVerification(request: user);
   }
 }

@@ -20,6 +20,7 @@ class LogInBloc extends Bloc<LogInEvent, LogInState> {
     on<LogInSubmitEvent>(_logIn);
     on<LogInWithGoogleEvent>(_logInWithGoogle);
     on<ReSubmitVerificationEvent>(_reSubmit);
+    on<LogOutEvent>(_logOut);
   }
 
   final AuthRepository _authRepository;
@@ -168,6 +169,19 @@ class LogInBloc extends Bloc<LogInEvent, LogInState> {
         state.copyWith(
           status: LogInStatus.failure,
         ),
+      );
+    }
+  }
+
+  Future<void> _logOut(
+      LogOutEvent event,
+      Emitter<LogInState> emit,
+      ) async {
+    try {
+      await _authRepository.logOut();
+    } on Exception {
+      emit(
+        state.copyWith(status: LogInStatus.failure),
       );
     }
   }

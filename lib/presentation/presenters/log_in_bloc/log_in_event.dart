@@ -44,3 +44,7 @@ class LogInWithGoogleEvent extends LogInEvent {
 class ReSubmitVerificationEvent extends LogInEvent {
   const ReSubmitVerificationEvent();
 }
+
+class LogOutEvent extends LogInEvent {
+  const LogOutEvent();
+}

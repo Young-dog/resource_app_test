@@ -7,11 +7,14 @@ import 'view/view.dart';
 
 @RoutePage()
 class SignInScreen extends StatelessWidget {
-  const SignInScreen({super.key});
+   const SignInScreen({super.key});
+
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
+
 
     return GestureDetector(
       onTap: () {
@@ -26,6 +29,9 @@ class SignInScreen extends StatelessWidget {
             listener: (context, state) {
               if (state.status.isNotVerified) {
                 context.router.push(const ReVerificationRoute());
+              }
+              if (state.status.isSuccess) {
+                context.router.pop(HomeRoute());
               }
             },
             builder: (context, state) {

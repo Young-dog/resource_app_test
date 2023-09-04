@@ -13,16 +13,17 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
 
   await await runTalkerZonedGuarded(
     TalkerFlutter.init(),
-        () async {
+    () async {
+      WidgetsFlutterBinding.ensureInitialized();
+      await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
+
       await registerDependencies();
       await GetIt.instance.allReady();
 
-      WidgetsFlutterBinding.ensureInitialized();
-      await Firebase.initializeApp(
-        options: DefaultFirebaseOptions.currentPlatform,);
-
       runApp(await builder());
     },
-        (error, stack) => GetIt.I<Talker>().handle(error, stack),
+    (error, stack) => GetIt.I<Talker>().handle(error, stack),
   );
 }

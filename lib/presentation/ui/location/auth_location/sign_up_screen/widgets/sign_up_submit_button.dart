@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../../../../../generated/l10n.dart';
 import '../../../../../presentation.dart';
-import '../../../../ui.dart';
 
 class SignUpSubmitButton extends StatelessWidget {
   const SignUpSubmitButton({super.key});
