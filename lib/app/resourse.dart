@@ -9,10 +9,11 @@ import 'app.dart';
 class Resourse extends StatelessWidget {
   Resourse({super.key});
 
-  final _appRouter = AppRouter();
+  final _appRouter = GetIt.instance<AppRouter>();
 
   @override
   Widget build(BuildContext context) {
+
     return GlobalBlocInjector(
       child: MaterialApp.router(
         localizationsDelegates: const [
@@ -22,8 +23,7 @@ class Resourse extends StatelessWidget {
           GlobalCupertinoLocalizations.delegate,
         ],
         routerConfig: _appRouter.config(
-          navigatorObservers: () =>
-          [
+          navigatorObservers: () => [
             TalkerRouteObserver(GetIt.I<Talker>()),
           ],
         ),

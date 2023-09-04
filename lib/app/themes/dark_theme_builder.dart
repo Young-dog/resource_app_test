@@ -30,6 +30,11 @@ class DarkThemeBuilder implements ThemeBuilder {
       brightness: Brightness.light,
       scaffoldBackgroundColor: palette.bgPrimary,
       textTheme: textTheme,
+      bottomNavigationBarTheme: _buildBottomNavigationBar(
+          palette: palette,
+          insets: spacings,
+          radiuses: radiuses,
+          textTheme: textTheme),
       elevatedButtonTheme: _buildElevatedButtonTheme(
         palette: palette,
         insets: spacings,
@@ -51,7 +56,8 @@ class DarkThemeBuilder implements ThemeBuilder {
       appBarTheme: _buildAppBarTheme(
         palette: palette,
       ),
-      snackBarTheme: _buildSnackBarTheme(insets: spacings, textTheme: textTheme),
+      snackBarTheme:
+          _buildSnackBarTheme(insets: spacings, textTheme: textTheme),
       extensions: [
         palette,
         radiuses,
@@ -83,6 +89,17 @@ class DarkThemeBuilder implements ThemeBuilder {
         );
 
     return textTheme;
+  }
+
+  BottomNavigationBarThemeData _buildBottomNavigationBar({
+    required Palette palette,
+    required Spacings insets,
+    required Radiuses radiuses,
+    required TextTheme textTheme,
+  }) {
+    return BottomNavigationBarThemeData(
+      backgroundColor: palette.bgPrimary,
+    );
   }
 
   ElevatedButtonThemeData _buildElevatedButtonTheme({

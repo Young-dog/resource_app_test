@@ -2,14 +2,15 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
 @RoutePage()
-class MainScreen extends StatelessWidget {
-  const MainScreen({super.key});
+class CalendarScreen extends StatelessWidget {
+  const CalendarScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: Container(),
+      body: Container(
+        child: Text('Calendar'),
+      ),
     );
   }
 }

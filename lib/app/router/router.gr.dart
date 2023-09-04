@@ -15,16 +15,30 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
+    CalendarRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const CalendarScreen(),
+      );
+    },
     ChangePasswordRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const ChangePasswordScreen(),
       );
     },
-    MainRoute.name: (routeData) {
+    ChatsRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const MainScreen(),
+        child: const ChatsScreen(),
+      );
+    },
+    HomeRoute.name: (routeData) {
+      final args =
+          routeData.argsAs<HomeRouteArgs>(orElse: () => const HomeRouteArgs());
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: HomeScreen(key: args.key),
       );
     },
     ReVerificationRoute.name: (routeData) {
@@ -39,6 +53,12 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const ResetPasswordScreen(),
       );
     },
+    SettingsRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const SettingsScreen(),
+      );
+    },
     SignInRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -51,7 +71,27 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const SignUpScreen(),
       );
     },
+    TaskerRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const TaskerScreen(),
+      );
+    },
   };
+}
+
+/// generated route for
+/// [CalendarScreen]
+class CalendarRoute extends PageRouteInfo<void> {
+  const CalendarRoute({List<PageRouteInfo>? children})
+      : super(
+          CalendarRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'CalendarRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
@@ -69,17 +109,45 @@ class ChangePasswordRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [MainScreen]
-class MainRoute extends PageRouteInfo<void> {
-  const MainRoute({List<PageRouteInfo>? children})
+/// [ChatsScreen]
+class ChatsRoute extends PageRouteInfo<void> {
+  const ChatsRoute({List<PageRouteInfo>? children})
       : super(
-          MainRoute.name,
+          ChatsRoute.name,
           initialChildren: children,
         );
 
-  static const String name = 'MainRoute';
+  static const String name = 'ChatsRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [HomeScreen]
+class HomeRoute extends PageRouteInfo<HomeRouteArgs> {
+  HomeRoute({
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
+          HomeRoute.name,
+          args: HomeRouteArgs(key: key),
+          initialChildren: children,
+        );
+
+  static const String name = 'HomeRoute';
+
+  static const PageInfo<HomeRouteArgs> page = PageInfo<HomeRouteArgs>(name);
+}
+
+class HomeRouteArgs {
+  const HomeRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'HomeRouteArgs{key: $key}';
+  }
 }
 
 /// generated route for
@@ -111,6 +179,20 @@ class ResetPasswordRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [SettingsScreen]
+class SettingsRoute extends PageRouteInfo<void> {
+  const SettingsRoute({List<PageRouteInfo>? children})
+      : super(
+          SettingsRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'SettingsRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
 /// [SignInScreen]
 class SignInRoute extends PageRouteInfo<void> {
   const SignInRoute({List<PageRouteInfo>? children})
@@ -134,6 +216,20 @@ class SignUpRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'SignUpRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [TaskerScreen]
+class TaskerRoute extends PageRouteInfo<void> {
+  const TaskerRoute({List<PageRouteInfo>? children})
+      : super(
+          TaskerRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'TaskerRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
