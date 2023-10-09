@@ -48,3 +48,14 @@ class ReSubmitVerificationEvent extends LogInEvent {
 class LogOutEvent extends LogInEvent {
   const LogOutEvent();
 }
+
+class DeleteAccountEvent extends LogInEvent {
+  const DeleteAccountEvent({required this.uid});
+
+  final String uid;
+
+  @override
+  List<Object> get props => [
+    uid,
+  ];
+}

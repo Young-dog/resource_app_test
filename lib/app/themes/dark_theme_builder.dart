@@ -26,15 +26,21 @@ class DarkThemeBuilder implements ThemeBuilder {
 
     return ThemeData(
       useMaterial3: true,
+      splashColor: Colors.transparent,
+      // <- Here
+      highlightColor: Colors.transparent,
+      // <- Here
+      hoverColor: Colors.transparent,
       colorSchemeSeed: palette.buttonPrimary,
       brightness: Brightness.light,
       scaffoldBackgroundColor: palette.bgPrimary,
       textTheme: textTheme,
       bottomNavigationBarTheme: _buildBottomNavigationBar(
-          palette: palette,
-          insets: spacings,
-          radiuses: radiuses,
-          textTheme: textTheme),
+        palette: palette,
+        insets: spacings,
+        radiuses: radiuses,
+        textTheme: textTheme,
+      ),
       elevatedButtonTheme: _buildElevatedButtonTheme(
         palette: palette,
         insets: spacings,

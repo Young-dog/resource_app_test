@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../data/data.dart';
+import '../domain.dart';
 
 abstract class AuthRepository {
   const AuthRepository();
@@ -22,14 +23,19 @@ abstract class AuthRepository {
   Future<void> reSubmitVerification({
     required UserCredential user,
   });
+
+  Future<void> deleteAccount({required String uid});
 }
 
 class AuthRepositoryImpl extends AuthRepository {
   AuthRepositoryImpl({
     required RemoteAuthDataSource remoteAuthDataSource,
-  }) : _remoteAuthDataSource = remoteAuthDataSource;
+    required UserProfileRepositories userProfileRepositories,
+  })  : _remoteAuthDataSource = remoteAuthDataSource,
+        _userProfileRepositories = userProfileRepositories;
 
   final RemoteAuthDataSource _remoteAuthDataSource;
+  final UserProfileRepositories _userProfileRepositories;
 
   @override
   Future<UserCredential> logIn({
@@ -43,17 +49,32 @@ class AuthRepositoryImpl extends AuthRepository {
       ),
     );
 
+    await _userProfileRepositories.setUserSessionLocal(
+      userProfile: const UserProfile(uid: '', username: '', email: '', avatarUri: ''),
+    );
+
+    final userProfile = await _remoteAuthDataSource.getUserProfile(user: user);
+
+    await _userProfileRepositories.setUserSessionLocal(userProfile: userProfile);
+
     return user;
   }
 
   @override
   Future<void> logInWithGoogle() async {
-    await _remoteAuthDataSource.logInWithGoogle();
+    final userProfile = await _remoteAuthDataSource.logInWithGoogle();
+
+    await _userProfileRepositories.setUserSessionLocal(userProfile: userProfile);
+
   }
 
   @override
   Future<void> logOut() async {
     await _remoteAuthDataSource.logOut();
+
+    await _userProfileRepositories.setUserSessionLocal(
+      userProfile: const UserProfile.empty(),
+    );
   }
 
   @override
@@ -69,6 +90,8 @@ class AuthRepositoryImpl extends AuthRepository {
         username: username,
       ),
     );
+
+
   }
 
   @override
@@ -76,5 +99,11 @@ class AuthRepositoryImpl extends AuthRepository {
     required UserCredential user,
   }) async {
     await _remoteAuthDataSource.reSubmitVerification(request: user);
+  }
+
+  @override
+  Future<void> deleteAccount({required String uid}) async {
+    await _remoteAuthDataSource.deleteAccount(uid: uid);
+    await _remoteAuthDataSource.logOut();
   }
 }

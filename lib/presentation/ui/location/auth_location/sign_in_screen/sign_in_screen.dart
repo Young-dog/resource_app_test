@@ -31,13 +31,13 @@ class SignInScreen extends StatelessWidget {
                 context.router.push(const ReVerificationRoute());
               }
               if (state.status.isSuccess) {
-                context.router.pop(HomeRoute());
+                context.router.replace(const HomeRoute());
               }
             },
             builder: (context, state) {
               if (state.status.isLoading) {
-                return const Center(
-                  child: CircularProgressIndicator(),
+                return Center(
+                  child: CircularProgressIndicator(color: theme.palette.buttonPrimary,),
                 );
               }
 

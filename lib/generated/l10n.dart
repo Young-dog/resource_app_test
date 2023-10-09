@@ -319,6 +319,116 @@ class S {
       args: [],
     );
   }
+
+  /// `Подзадача...`
+  String get subtaskHintTitle {
+    return Intl.message(
+      'Подзадача...',
+      name: 'subtaskHintTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Название задачи...`
+  String get taskTitleInput {
+    return Intl.message(
+      'Название задачи...',
+      name: 'taskTitleInput',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Критическая`
+  String get critical {
+    return Intl.message(
+      'Критическая',
+      name: 'critical',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Важная`
+  String get important {
+    return Intl.message(
+      'Важная',
+      name: 'important',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Средняя`
+  String get medium {
+    return Intl.message(
+      'Средняя',
+      name: 'medium',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Низкая`
+  String get low {
+    return Intl.message(
+      'Низкая',
+      name: 'low',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Отложенная`
+  String get deferred {
+    return Intl.message(
+      'Отложенная',
+      name: 'deferred',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Время +`
+  String get timeButtonTitle {
+    return Intl.message(
+      'Время +',
+      name: 'timeButtonTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Сохранить`
+  String get saveButtonTitle {
+    return Intl.message(
+      'Сохранить',
+      name: 'saveButtonTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Удалить`
+  String get deleteButtonTitle {
+    return Intl.message(
+      'Удалить',
+      name: 'deleteButtonTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Добавить`
+  String get addButtonTitle {
+    return Intl.message(
+      'Добавить',
+      name: 'addButtonTitle',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

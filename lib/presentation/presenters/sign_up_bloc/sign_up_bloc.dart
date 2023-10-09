@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import '../../../core/core.dart';
+import '../../../data/data.dart';
 import '../../../domain/domain.dart';
 import '../../presentation.dart';
 
@@ -11,8 +12,9 @@ part 'sign_up_event.dart';
 part 'sign_up_state.dart';
 
 class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
-  SignUpBloc({required AuthRepository authRepository})
-      : _authRepository = authRepository,
+  SignUpBloc({
+    required AuthRepository authRepository,
+  })  : _authRepository = authRepository,
         super(const SignUpState.initial()) {
     on<EmailInputSignUpEvent>(_emailInput);
     on<UsernameInputEvent>(_usernameInput);
@@ -144,6 +146,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
         password: state.newPassword.value,
         username: state.username.value,
       );
+
       emit(
         state.copyWith(
           status: SignUpStatus.success,

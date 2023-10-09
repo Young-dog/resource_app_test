@@ -16,7 +16,15 @@ class GlobalBlocInjector extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => GetIt.instance<LogInBloc>()),
+        BlocProvider(
+          create: (context) => GetIt.instance<LogInBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => GetIt.instance<TaskerBloc>(),
+        ),
+        // BlocProvider(
+        //   create: (context) => GetIt.instance<UserProfileBloc>(),
+        // ),
       ],
       child: child,
     );

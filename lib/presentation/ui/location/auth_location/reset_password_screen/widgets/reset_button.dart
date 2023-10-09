@@ -12,14 +12,15 @@ class ResetButton extends StatelessWidget {
     return BlocBuilder<ResetPasswordBloc, ResetPasswordState>(
       builder: (context, state) {
         return PrimaryButton(
-          onPressed: !state.formStatusFirst.isValidated ? null : () {
-            context.read<ResetPasswordBloc>().add(
-                const SubmitEmailResetPasswordEvent());
-          },
+          onPressed: !state.formStatusFirst.isValidated
+              ? null
+              : () {
+                  context.read<ResetPasswordBloc>().add(
+                        const SubmitEmailResetPasswordEvent(),
+                      );
+                },
           child: Text(
-            S
-                .of(context)
-                .submitResetPassButtonTitle,
+            S.of(context).submitResetPassButtonTitle,
           ),
         );
       },

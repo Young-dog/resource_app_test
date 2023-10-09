@@ -21,6 +21,7 @@ class LogInBloc extends Bloc<LogInEvent, LogInState> {
     on<LogInWithGoogleEvent>(_logInWithGoogle);
     on<ReSubmitVerificationEvent>(_reSubmit);
     on<LogOutEvent>(_logOut);
+    on<DeleteAccountEvent>(_onDeleteAccount);
   }
 
   final AuthRepository _authRepository;
@@ -127,6 +128,11 @@ class LogInBloc extends Bloc<LogInEvent, LogInState> {
     LogInWithGoogleEvent event,
     Emitter<LogInState> emit,
   ) async {
+    emit(
+      state.copyWith(
+        status: LogInStatus.loading,
+      ),
+    );
     try {
       await _authRepository.logInWithGoogle();
 
@@ -174,11 +180,24 @@ class LogInBloc extends Bloc<LogInEvent, LogInState> {
   }
 
   Future<void> _logOut(
-      LogOutEvent event,
+    LogOutEvent event,
+    Emitter<LogInState> emit,
+  ) async {
+    try {
+      await _authRepository.logOut();
+    } on Exception {
+      emit(
+        state.copyWith(status: LogInStatus.failure),
+      );
+    }
+  }
+
+  Future<void> _onDeleteAccount(
+      DeleteAccountEvent event,
       Emitter<LogInState> emit,
       ) async {
     try {
-      await _authRepository.logOut();
+      await _authRepository.deleteAccount(uid: event.uid);
     } on Exception {
       emit(
         state.copyWith(status: LogInStatus.failure),

@@ -4,9 +4,14 @@ import '../../../../../app/app.dart';
 import '../../../../presentation.dart';
 
 @RoutePage()
-class HomeScreen extends StatelessWidget {
-  HomeScreen({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   final _pages = [
     const TaskerScreen(),
     const CalendarScreen(),
@@ -14,16 +19,27 @@ class HomeScreen extends StatelessWidget {
     const SettingsScreen(),
   ];
 
-  final _pageController = PageController(
-    initialPage: 0,
-  );
+  late final PageController _pageController;
+
+  @override
+  void initState() {
+    _pageController = PageController(
+      initialPage: 0,
+    );
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
     return Scaffold(
-      appBar: const HomeAppBar(),
       drawer: const SideHomeMenu(),
       body: Stack(
         children: [
@@ -43,43 +59,3 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
-
-/*
-AutoTabsScaffold(
-      backgroundColor: theme.palette.bgPrimary,
-      routes: const [
-        TaskerRoute(),
-        CalendarRoute(),
-        ChatsRoute(),
-        SettingsRoute(),
-      ],
-      bottomNavigationBuilder: (_, tabsRouter) {
-        return BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          currentIndex: tabsRouter.activeIndex,
-          onTap: tabsRouter.setActiveIndex,
-          elevation: 0,
-          items: [
-            BottomNavigationBarItem(
-              label: 'Tasks',
-              icon: Icon(Icons.add),
-              backgroundColor: theme.palette.bgPrimary,
-            ),
-            BottomNavigationBarItem(
-              label: 'Calendar',
-              icon: Icon(Icons.ac_unit),
-              backgroundColor: theme.palette.bgPrimary,),
-            BottomNavigationBarItem(
-              label: 'Chats',
-              icon: Icon(Icons.access_alarm),
-              backgroundColor: theme.palette.bgPrimary,),
-            BottomNavigationBarItem(
-                label: 'Settings',
-                icon: Icon(Icons.accessibility_new),
-                backgroundColor: theme.palette.bgPrimary,),
-          ],
-        );
-      },
-    );
-
- */

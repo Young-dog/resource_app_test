@@ -57,7 +57,9 @@ class ResetPasswordBloc extends Bloc<ResetPasswordEvent, ResetPasswordState> {
     Emitter<ResetPasswordState> emit,
   ) {
     final confirmPassword = ConfirmPassword.dirty(
-        value: event.value, original: state.newPassword.value);
+      value: event.value,
+      original: state.newPassword.value,
+    );
 
     final newState = state.copyWith(
       formStatusFirst: state.validatePassword(
@@ -95,7 +97,6 @@ class ResetPasswordBloc extends Bloc<ResetPasswordEvent, ResetPasswordState> {
         ),
       );
     } catch (e) {
-      print(e);
       emit(
         state.copyWith(
           status: ResetPasswordStatus.failure,

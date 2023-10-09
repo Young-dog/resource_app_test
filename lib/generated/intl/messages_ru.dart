@@ -22,14 +22,18 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "addButtonTitle": MessageLookupByLibrary.simpleMessage("Добавить"),
         "changePaswordButtonTitle":
             MessageLookupByLibrary.simpleMessage("Изменить пароль"),
         "confirmPasswordLabel":
             MessageLookupByLibrary.simpleMessage("Повторите пароль"),
         "continueButtonTitle":
             MessageLookupByLibrary.simpleMessage("Продолжить"),
+        "critical": MessageLookupByLibrary.simpleMessage("Критическая"),
         "defaultErrorMessage":
             MessageLookupByLibrary.simpleMessage("Произошла ошибка"),
+        "deferred": MessageLookupByLibrary.simpleMessage("Отложенная"),
+        "deleteButtonTitle": MessageLookupByLibrary.simpleMessage("Удалить"),
         "descriptionResetPassword": MessageLookupByLibrary.simpleMessage(
             "Напишите электронную почту. Мы отправим инструкции по сбросу пароля."),
         "emailLabel": MessageLookupByLibrary.simpleMessage("E-mail"),
@@ -37,10 +41,13 @@ class MessageLookup extends MessageLookupByLibrary {
             "На указанный e-mail была отправлена ссылка для подтверждения адреса электронной почты. Перейдите по ней и подтвердите ваши учетные данные"),
         "goBackButtonTitle":
             MessageLookupByLibrary.simpleMessage("Вернуться назад"),
+        "important": MessageLookupByLibrary.simpleMessage("Важная"),
         "incorrectDataError": MessageLookupByLibrary.simpleMessage(
             "Некорректный email и/или имя пользователя"),
         "invalidUserCredentialError": MessageLookupByLibrary.simpleMessage(
             "Неверный e-mail и/или пароль"),
+        "low": MessageLookupByLibrary.simpleMessage("Низкая"),
+        "medium": MessageLookupByLibrary.simpleMessage("Средняя"),
         "missingConnectionError": MessageLookupByLibrary.simpleMessage(
             "Отсутсвует сетевое соединение"),
         "orTitle": MessageLookupByLibrary.simpleMessage("или"),
@@ -55,6 +62,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Раннее на указанный e-mail мы отправляли письмо с просьбой подтвердить адрес электронной почты. К сожаленнию подтверждение так и не поступило. Если по какой-то причине вы не получили данное письмо, запросите повторную отправку"),
         "resetPasswordButtonTitle":
             MessageLookupByLibrary.simpleMessage("забыли пароль?"),
+        "saveButtonTitle": MessageLookupByLibrary.simpleMessage("Сохранить"),
         "signInButtonTitle": MessageLookupByLibrary.simpleMessage("Войти"),
         "signInWithgoogleButtonTitle":
             MessageLookupByLibrary.simpleMessage("Войти с помощью google"),
@@ -66,6 +74,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Сбросить пароль"),
         "successSubmitResetTitle": MessageLookupByLibrary.simpleMessage(
             "На указанный e-mail была отправлена ссылка для  восстановления. Перейдите по ней и придумайте новый пароль"),
+        "taskTitleInput":
+            MessageLookupByLibrary.simpleMessage("Название задачи..."),
+        "timeButtonTitle": MessageLookupByLibrary.simpleMessage("Время +"),
         "titleApp": MessageLookupByLibrary.simpleMessage("Resourse"),
         "userAlreadyError": MessageLookupByLibrary.simpleMessage(
             "Учетная запись с данным e-mail уже зарегистрирована в системе"),

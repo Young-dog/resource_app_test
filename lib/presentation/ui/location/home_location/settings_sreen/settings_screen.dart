@@ -1,8 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../../presentation.dart';
+import 'view/settings_view.dart';
 
 @RoutePage()
 class SettingsScreen extends StatelessWidget {
@@ -10,11 +8,6 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Container(
-        child: IconButton(onPressed: () {
-          context.read<LogInBloc>().add(LogOutEvent());
-        }, icon: Icon(Icons.arrow_back_outlined),),
-    ),);
+    return  const SettingsView();
   }
 }

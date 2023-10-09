@@ -11,10 +11,21 @@
            </array>
        </dict>
    </array>
+   <key>UIBackgroundModes</key>
+          <array>
+              <string>fetch</string>
+              <string>remote-notification</string>
+          </array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
 	<string>Resourse App</string>
+
+	<key>NSCameraUsageDescription</key>
+    <string>Access to Camera</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Access to Gallery</string>
+
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>

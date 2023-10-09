@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../../app/app.dart';
+import '../../../../../presentation.dart';
 import '../widgets/widgets.dart';
 
 class TaskerView extends StatelessWidget {
@@ -11,21 +12,39 @@ class TaskerView extends StatelessWidget {
     final theme = Theme.of(context);
 
     return Scaffold(
-      body: Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.symmetric(
-          horizontal: theme.spacings.x4,
-        ),
-        child: Column(
-          children: [
-            const FilterCalendar(),
-            Container(
-              child: const Text('Tasks'),
+      body: CustomScrollView(
+        slivers: [
+          const TaskerAppBar(),
+          SliverToBoxAdapter(
+            child: SizedBox(
+              height: theme.spacings.x4,
             ),
-          ],
-        ),
+          ),
+          const TasksList(),
+          SliverToBoxAdapter(
+            child: SizedBox(
+              height: theme.spacings.x20 * 2,
+            ),
+          ),
+        ],
       ),
     );
   }
 }
+
+/*
+Scaffold(
+      //appBar: const TaskerAppBar(),
+      body:  Padding(
+        padding: EdgeInsets.symmetric(horizontal: theme.spacings.x4,),
+        child: ListView(
+          physics: const BouncingScrollPhysics(),
+          children: [
+            SizedBox(height: theme.spacings.x6,),
+            const TasksList(),
+            SizedBox(height: theme.spacings.x20*2,),
+          ],
+        ),
+      ),
+    );
+ */

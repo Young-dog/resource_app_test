@@ -33,12 +33,20 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const ChatsScreen(),
       );
     },
-    HomeRoute.name: (routeData) {
-      final args =
-          routeData.argsAs<HomeRouteArgs>(orElse: () => const HomeRouteArgs());
+    EditProfileRoute.name: (routeData) {
+      final args = routeData.argsAs<EditProfileRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: HomeScreen(key: args.key),
+        child: EditProfileScreen(
+          userProfile: args.userProfile,
+          key: args.key,
+        ),
+      );
+    },
+    HomeRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const HomeScreen(),
       );
     },
     ReVerificationRoute.name: (routeData) {
@@ -69,6 +77,17 @@ abstract class _$AppRouter extends RootStackRouter {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const SignUpScreen(),
+      );
+    },
+    TaskRoute.name: (routeData) {
+      final args = routeData.argsAs<TaskRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: TaskScreen(
+          task: args.task,
+          index: args.index,
+          key: args.key,
+        ),
       );
     },
     TaskerRoute.name: (routeData) {
@@ -123,31 +142,55 @@ class ChatsRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [HomeScreen]
-class HomeRoute extends PageRouteInfo<HomeRouteArgs> {
-  HomeRoute({
+/// [EditProfileScreen]
+class EditProfileRoute extends PageRouteInfo<EditProfileRouteArgs> {
+  EditProfileRoute({
+    required UserProfile userProfile,
     Key? key,
     List<PageRouteInfo>? children,
   }) : super(
-          HomeRoute.name,
-          args: HomeRouteArgs(key: key),
+          EditProfileRoute.name,
+          args: EditProfileRouteArgs(
+            userProfile: userProfile,
+            key: key,
+          ),
           initialChildren: children,
         );
 
-  static const String name = 'HomeRoute';
+  static const String name = 'EditProfileRoute';
 
-  static const PageInfo<HomeRouteArgs> page = PageInfo<HomeRouteArgs>(name);
+  static const PageInfo<EditProfileRouteArgs> page =
+      PageInfo<EditProfileRouteArgs>(name);
 }
 
-class HomeRouteArgs {
-  const HomeRouteArgs({this.key});
+class EditProfileRouteArgs {
+  const EditProfileRouteArgs({
+    required this.userProfile,
+    this.key,
+  });
+
+  final UserProfile userProfile;
 
   final Key? key;
 
   @override
   String toString() {
-    return 'HomeRouteArgs{key: $key}';
+    return 'EditProfileRouteArgs{userProfile: $userProfile, key: $key}';
   }
+}
+
+/// generated route for
+/// [HomeScreen]
+class HomeRoute extends PageRouteInfo<void> {
+  const HomeRoute({List<PageRouteInfo>? children})
+      : super(
+          HomeRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'HomeRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
@@ -218,6 +261,48 @@ class SignUpRoute extends PageRouteInfo<void> {
   static const String name = 'SignUpRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [TaskScreen]
+class TaskRoute extends PageRouteInfo<TaskRouteArgs> {
+  TaskRoute({
+    required TaskRequestDto task,
+    required int index,
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
+          TaskRoute.name,
+          args: TaskRouteArgs(
+            task: task,
+            index: index,
+            key: key,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'TaskRoute';
+
+  static const PageInfo<TaskRouteArgs> page = PageInfo<TaskRouteArgs>(name);
+}
+
+class TaskRouteArgs {
+  const TaskRouteArgs({
+    required this.task,
+    required this.index,
+    this.key,
+  });
+
+  final TaskRequestDto task;
+
+  final int index;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'TaskRouteArgs{task: $task, index: $index, key: $key}';
+  }
 }
 
 /// generated route for

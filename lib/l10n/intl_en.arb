@@ -25,5 +25,16 @@
   "passwordsNotMatchError": "Пароли не совпадают и/или не соответсвуют требованиям",
   "missingConnectionError": "Отсутсвует сетевое соединение",
   "defaultErrorMessage": "Произошла ошибка",
-  "userAlreadyError": "Учетная запись с данным e-mail уже зарегистрирована в системе"
+  "userAlreadyError": "Учетная запись с данным e-mail уже зарегистрирована в системе",
+  "subtaskHintTitle": "Подзадача...",
+  "taskTitleInput": "Название задачи...",
+  "critical": "Критическая",
+  "important": "Важная",
+  "medium": "Средняя",
+  "low": "Низкая",
+  "deferred": "Отложенная",
+  "timeButtonTitle": "Время +",
+  "saveButtonTitle": "Сохранить",
+  "deleteButtonTitle": "Удалить",
+  "addButtonTitle": "Добавить"
 }

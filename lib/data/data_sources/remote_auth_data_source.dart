@@ -1,6 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+
+import '../../app/app.dart';
+import '../../core/services/services.dart';
+import '../../domain/models/models.dart';
+import '../../presentation/presentation.dart';
 import '../data.dart';
 
 abstract class RemoteAuthDataSource {
@@ -12,21 +18,30 @@ abstract class RemoteAuthDataSource {
 
   Future<void> logOut();
 
-  Future<void> logInWithGoogle();
+  Future<UserProfile> logInWithGoogle();
 
   Future<void> reSubmitVerification({required UserCredential request});
+
+  Future<UserProfile> getUserProfile({required UserCredential user});
+
+  Future<void> deleteAccount({required String uid});
 }
 
 class RemoteAuthDataSourceImpl implements RemoteAuthDataSource {
   const RemoteAuthDataSourceImpl({
     required FirebaseAuth firebaseAuth,
+    required LocaleCategoryDataSource localCategoryDataSource,
     required FirebaseFirestore firebaseFirestore,
+    required FileManager fileManager,
   })  : _auth = firebaseAuth,
-        _fireStore = firebaseFirestore;
+        _categoryDataSource = localCategoryDataSource,
+        _fireStore = firebaseFirestore,
+        _fileManager = fileManager;
 
   final FirebaseAuth _auth;
-
+  final LocaleCategoryDataSource _categoryDataSource;
   final FirebaseFirestore _fireStore;
+  final FileManager _fileManager;
 
   @override
   Future<UserCredential> logIn({required SignInRequestDto request}) async {
@@ -47,20 +62,28 @@ class RemoteAuthDataSourceImpl implements RemoteAuthDataSource {
 
     await user.user?.sendEmailVerification();
 
-    await _fireStore.collection('users').doc(user.user!.uid).set({
-      'userId': user.user!.uid,
-      'username': request.username,
-      'e-mail': request.email,
-    });
+    await _fireStore.collection(FirebaseNames.users).doc(user.user!.uid).set(
+          UserProfile(
+            uid: user.user!.uid,
+            username: request.username,
+            email: request.email,
+            avatarUri: '',
+          ).toJson(),
+        );
+
+    await _categoryDataSource.addStartCategory();
   }
 
   @override
   Future<void> logOut() async {
+    await _fileManager.deleteDirectory();
     await _auth.signOut();
   }
 
   @override
-  Future<void> logInWithGoogle() async {
+  Future<UserProfile> logInWithGoogle() async {
+    String? imagePath;
+
     final googleUser = await GoogleSignIn().signIn();
 
     final googleAuth = await googleUser?.authentication;
@@ -72,16 +95,87 @@ class RemoteAuthDataSourceImpl implements RemoteAuthDataSource {
 
     final userCredential = await _auth.signInWithCredential(credential);
 
-    await _fireStore.collection('users').doc(userCredential.user!.uid).set({
-      'userId': userCredential.user!.uid,
-      'username': userCredential.user!.displayName,
-      'e-mail': userCredential.user!.email,
-    });
+    final additionalUserInfo = userCredential.additionalUserInfo;
 
+    final isNewUser = additionalUserInfo!.isNewUser;
+
+    if (isNewUser) {
+      await _fireStore
+          .collection(FirebaseNames.users)
+          .doc(userCredential.user!.uid)
+          .set(
+            UserProfile(
+              uid: userCredential.user!.uid,
+              username: userCredential.user!.displayName,
+              email: userCredential.user!.email,
+              avatarUri: '',
+            ).toJson(),
+          );
+    }
+
+    if (isNewUser) {
+      await _categoryDataSource.addStartCategory();
+    }
+
+    final response = await _fireStore
+        .collection(FirebaseNames.users)
+        .doc(userCredential.user!.uid)
+        .get();
+
+    final userProfile =
+        UserProfile.fromJson(response.data() as Map<String, dynamic>);
+
+    if (userProfile.avatarUri?.isNotEmpty ?? false) {
+      imagePath = await _fileManager.download(url: userProfile.avatarUri!, name: userProfile.uid!);
+    }
+
+    return userProfile.copyWith(avatarUri: imagePath ?? '');
   }
 
   @override
   Future<void> reSubmitVerification({required UserCredential request}) async {
     await request.user?.sendEmailVerification();
+  }
+
+  @override
+  Future<UserProfile> getUserProfile({required UserCredential user}) async {
+    String? imagePath;
+
+    final response = await _fireStore
+        .collection(FirebaseNames.users)
+        .doc(user.user!.uid)
+        .get();
+
+    final userProfile =
+        UserProfile.fromJson(response.data() as Map<String, dynamic>);
+
+    if (userProfile.avatarUri?.isNotEmpty ?? false) {
+      imagePath = await _fileManager.download(url: userProfile.avatarUri!, name: userProfile.uid!);
+    }
+
+    return userProfile.copyWith(avatarUri: imagePath ?? '');
+  }
+
+  @override
+  Future<void> deleteAccount({required String uid}) async {
+    await _fireStore
+        .collection(FirebaseNames.users)
+        .doc(uid)
+        .delete()
+        .catchError((error) {
+      GetIt.instance<SnackBarService>().show(
+        snackBar: ErrorSnackBar(
+          exception: Exception(),
+        ),
+      );
+    });
+
+    await _auth.currentUser!.delete().catchError((error) {
+      GetIt.instance<SnackBarService>().show(
+        snackBar: ErrorSnackBar(
+          exception: Exception(),
+        ),
+      );
+    });
   }
 }

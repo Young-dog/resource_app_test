@@ -12,4 +12,3 @@ class SuccessSnackBar extends SnackBar {
     return Text(message);
   }
 }
-

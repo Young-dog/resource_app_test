@@ -5,7 +5,6 @@ import 'package:get_it/get_it.dart';
 
 import '../../../../../app/app.dart';
 import '../../../../presentation.dart';
-import 'view/reset_password_view.dart';
 import 'view/view.dart';
 
 @RoutePage()

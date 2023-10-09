@@ -27,7 +27,7 @@ class FieldInput extends StatelessWidget {
   final String? initialValue;
   final String labelText;
   final TextStyle? labelStyle;
-  final int numLines;
+  final int? numLines;
   final int? maxLength;
   final TextInputType? keyboardType;
   final void Function(String value)? onChanged;
@@ -54,6 +54,7 @@ class FieldInput extends StatelessWidget {
         inputFormatters: [
           LengthLimitingTextInputFormatter(maxLength),
         ],
+        cursorColor: theme.palette.textTertiary,
         keyboardType: keyboardType,
         onFieldSubmitted: onSubmit,
         onChanged: onChanged,

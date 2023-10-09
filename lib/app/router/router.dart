@@ -1,5 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import '../../data/data.dart';
+import '../../domain/domain.dart';
 import '../../presentation/presentation.dart';
 import 'guards/guards.dart';
 
@@ -33,10 +35,28 @@ class AppRouter extends _$AppRouter {
             ),
           ],
         ),
-        AutoRoute(page: SignInRoute.page),
-        AutoRoute(page: SignUpRoute.page),
-        AutoRoute(page: ResetPasswordRoute.page),
-        AutoRoute(page: ChangePasswordRoute.page),
-        AutoRoute(page: ReVerificationRoute.page),
+        AutoRoute(
+          page: SignInRoute.page,
+        ),
+        AutoRoute(
+          page: SignUpRoute.page,
+        ),
+        AutoRoute(
+          page: ResetPasswordRoute.page,
+        ),
+        AutoRoute(
+          page: ChangePasswordRoute.page,
+        ),
+        AutoRoute(
+          page: ReVerificationRoute.page,
+        ),
+        AutoRoute(
+          guards: [AuthGuard()],
+          page: TaskRoute.page,
+        ),
+        AutoRoute(
+          guards: [AuthGuard()],
+          page: EditProfileRoute.page,
+        ),
       ];
 }
