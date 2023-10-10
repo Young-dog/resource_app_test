@@ -4,36 +4,13 @@ import '../../../../../app/app.dart';
 import '../../../../presentation.dart';
 
 @RoutePage()
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({
+    this.child = const TaskerScreen(),
+    super.key,
+  });
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  final _pages = [
-    const TaskerScreen(),
-    const CalendarScreen(),
-    const ChatsScreen(),
-    const SettingsScreen(),
-  ];
-
-  late final PageController _pageController;
-
-  @override
-  void initState() {
-    _pageController = PageController(
-      initialPage: 0,
-    );
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
-  }
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {
@@ -43,15 +20,10 @@ class _HomeScreenState extends State<HomeScreen> {
       drawer: const SideHomeMenu(),
       body: Stack(
         children: [
-          PageView(
-            physics: const NeverScrollableScrollPhysics(),
-            controller: _pageController,
-            children: _pages,
-          ),
+          child,
           Positioned(
             bottom: theme.spacings.x3,
-            child: BottomNavBar(
-              pageController: _pageController,
+            child: const BottomNavBar(
             ),
           ),
         ],

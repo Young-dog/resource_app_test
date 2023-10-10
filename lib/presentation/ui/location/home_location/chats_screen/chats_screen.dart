@@ -7,9 +7,7 @@ class ChatsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Container(
-        child: Text('Chats Screen'),
-    ),);
+    return const Scaffold(
+        body: Text('Chats Screen'),);
   }
 }

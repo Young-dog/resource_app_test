@@ -1,7 +1,6 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import '../../data/data.dart';
 import '../../domain/domain.dart';
-import '../hive_boxes.dart';
 
 Future<void> initializeHive() async {
   await Hive.initFlutter();

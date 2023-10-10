@@ -18,7 +18,7 @@ abstract class RemoteAuthDataSource {
 
   Future<void> logOut();
 
-  Future<UserProfile> logInWithGoogle();
+  Future<UserProfile?> logInWithGoogle();
 
   Future<void> reSubmitVerification({required UserCredential request});
 
@@ -81,55 +81,64 @@ class RemoteAuthDataSourceImpl implements RemoteAuthDataSource {
   }
 
   @override
-  Future<UserProfile> logInWithGoogle() async {
+  Future<UserProfile?> logInWithGoogle() async {
     String? imagePath;
 
     final googleUser = await GoogleSignIn().signIn();
 
     final googleAuth = await googleUser?.authentication;
 
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth?.accessToken,
-      idToken: googleAuth?.idToken,
-    );
+    if (googleAuth != null) {
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
 
-    final userCredential = await _auth.signInWithCredential(credential);
+      final userCredential = await _auth.signInWithCredential(credential);
 
-    final additionalUserInfo = userCredential.additionalUserInfo;
+      final additionalUserInfo = userCredential.additionalUserInfo;
 
-    final isNewUser = additionalUserInfo!.isNewUser;
+      final isNewUser = additionalUserInfo!.isNewUser;
 
-    if (isNewUser) {
-      await _fireStore
+      if (isNewUser) {
+        await _fireStore
+            .collection(FirebaseNames.users)
+            .doc(userCredential.user!.uid)
+            .set(
+          UserProfile(
+            uid: userCredential.user!.uid,
+            username: userCredential.user!.displayName,
+            email: userCredential.user!.email,
+            avatarUri: '',
+          ).toJson(),
+        );
+      }
+
+      if (isNewUser) {
+        await _categoryDataSource.addStartCategory();
+      }
+
+      final response = await _fireStore
           .collection(FirebaseNames.users)
           .doc(userCredential.user!.uid)
-          .set(
-            UserProfile(
-              uid: userCredential.user!.uid,
-              username: userCredential.user!.displayName,
-              email: userCredential.user!.email,
-              avatarUri: '',
-            ).toJson(),
-          );
+          .get();
+
+      final jsonData = response.data();
+
+      if (jsonData == null) {
+        throw Exception();
+      }
+
+      final userProfile =
+      UserProfile.fromJson(jsonData);
+
+      if (userProfile.avatarUri?.isNotEmpty ?? false) {
+        imagePath = await _fileManager.download(url: userProfile.avatarUri!, name: userProfile.uid!);
+      }
+
+      return userProfile.copyWith(avatarUri: imagePath ?? '');
     }
-
-    if (isNewUser) {
-      await _categoryDataSource.addStartCategory();
-    }
-
-    final response = await _fireStore
-        .collection(FirebaseNames.users)
-        .doc(userCredential.user!.uid)
-        .get();
-
-    final userProfile =
-        UserProfile.fromJson(response.data() as Map<String, dynamic>);
-
-    if (userProfile.avatarUri?.isNotEmpty ?? false) {
-      imagePath = await _fileManager.download(url: userProfile.avatarUri!, name: userProfile.uid!);
-    }
-
-    return userProfile.copyWith(avatarUri: imagePath ?? '');
+    return null;
   }
 
   @override

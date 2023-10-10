@@ -17,7 +17,10 @@ class FileManager extends Equatable {
   late bool _permissionReady;
   late TargetPlatform? platform;
 
-  Future<String> download({required String url, required String name,}) async {
+  Future<String> download({
+    required String url,
+    required String name,
+  }) async {
     if (Platform.isAndroid) {
       platform = TargetPlatform.android;
     } else {
@@ -25,7 +28,6 @@ class FileManager extends Equatable {
     }
 
     _permissionReady = await _checkPermission();
-
 
     if (_permissionReady) {
       await _prepareSaveDir();
@@ -43,7 +45,10 @@ class FileManager extends Equatable {
     return '$_localPath/$name';
   }
 
-  Future<String> saveLocal({required File file, required String name,}) async {
+  Future<String> saveLocal({
+    required File file,
+    required String name,
+  }) async {
     if (Platform.isAndroid) {
       platform = TargetPlatform.android;
     } else {
@@ -53,6 +58,7 @@ class FileManager extends Equatable {
     _permissionReady = await _checkPermission();
 
     if (_permissionReady) {
+      await deleteDirectory();
       await _prepareSaveDir();
       await file.copy('$_localPath/$name');
     }
@@ -85,14 +91,13 @@ class FileManager extends Equatable {
     final savedDir = Directory(_localPath);
     final hasExisted = await savedDir.exists();
     if (!hasExisted) {
-      print('Создаю');
       await savedDir.create();
     }
   }
 
   Future<String?> _findLocalPath() async {
-      final directory = await getApplicationDocumentsDirectory();
-      return '${directory.path}${Platform.pathSeparator}Avatar';
+    final directory = await getApplicationDocumentsDirectory();
+    return '${directory.path}${Platform.pathSeparator}Avatar';
   }
 
   Future<void> deleteDirectory() async {

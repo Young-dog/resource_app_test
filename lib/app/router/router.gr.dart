@@ -34,19 +34,20 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     EditProfileRoute.name: (routeData) {
-      final args = routeData.argsAs<EditProfileRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: EditProfileScreen(
-          userProfile: args.userProfile,
-          key: args.key,
-        ),
+        child: const EditProfileScreen(),
       );
     },
     HomeRoute.name: (routeData) {
+      final args =
+          routeData.argsAs<HomeRouteArgs>(orElse: () => const HomeRouteArgs());
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const HomeScreen(),
+        child: HomeScreen(
+          child: args.child,
+          key: args.key,
+        ),
       );
     },
     ReVerificationRoute.name: (routeData) {
@@ -143,54 +144,53 @@ class ChatsRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [EditProfileScreen]
-class EditProfileRoute extends PageRouteInfo<EditProfileRouteArgs> {
-  EditProfileRoute({
-    required UserProfile userProfile,
-    Key? key,
-    List<PageRouteInfo>? children,
-  }) : super(
+class EditProfileRoute extends PageRouteInfo<void> {
+  const EditProfileRoute({List<PageRouteInfo>? children})
+      : super(
           EditProfileRoute.name,
-          args: EditProfileRouteArgs(
-            userProfile: userProfile,
-            key: key,
-          ),
           initialChildren: children,
         );
 
   static const String name = 'EditProfileRoute';
 
-  static const PageInfo<EditProfileRouteArgs> page =
-      PageInfo<EditProfileRouteArgs>(name);
-}
-
-class EditProfileRouteArgs {
-  const EditProfileRouteArgs({
-    required this.userProfile,
-    this.key,
-  });
-
-  final UserProfile userProfile;
-
-  final Key? key;
-
-  @override
-  String toString() {
-    return 'EditProfileRouteArgs{userProfile: $userProfile, key: $key}';
-  }
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
 /// [HomeScreen]
-class HomeRoute extends PageRouteInfo<void> {
-  const HomeRoute({List<PageRouteInfo>? children})
-      : super(
+class HomeRoute extends PageRouteInfo<HomeRouteArgs> {
+  HomeRoute({
+    Widget child = const TaskerScreen(),
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
           HomeRoute.name,
+          args: HomeRouteArgs(
+            child: child,
+            key: key,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'HomeRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<HomeRouteArgs> page = PageInfo<HomeRouteArgs>(name);
+}
+
+class HomeRouteArgs {
+  const HomeRouteArgs({
+    this.child = const TaskerScreen(),
+    this.key,
+  });
+
+  final Widget child;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'HomeRouteArgs{child: $child, key: $key}';
+  }
 }
 
 /// generated route for

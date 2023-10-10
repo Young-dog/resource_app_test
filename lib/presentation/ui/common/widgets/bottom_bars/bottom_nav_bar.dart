@@ -1,18 +1,15 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../../app/app.dart';
-import '../../../../../app/asset_names.dart';
 import '../../../../presentation.dart';
 
 class BottomNavBar extends StatelessWidget {
   const BottomNavBar({
-    required this.pageController,
     super.key,
   });
-
-  final PageController pageController;
 
   @override
   Widget build(BuildContext context) {
@@ -32,15 +29,12 @@ class BottomNavBar extends StatelessWidget {
                 return const _ActionTasks();
               }
 
-              if (state.indexes.isNotEmpty) {
-                return _ReplaceScreen(
-                  pageController: pageController,
-                );
-              }
+              // if (state.indexes.isNotEmpty) {
+              //   return _ReplaceScreen(
+              //   );
+              // }
 
-              return _ReplaceScreen(
-                pageController: pageController,
-              );
+              return const _ReplaceScreen();
             },
           ),
         ),
@@ -115,11 +109,7 @@ class _ActionTasks extends StatelessWidget {
 }
 
 class _ReplaceScreen extends StatelessWidget {
-  const _ReplaceScreen({
-    required this.pageController,
-  });
-
-  final PageController pageController;
+  const _ReplaceScreen();
 
   @override
   Widget build(BuildContext context) {
@@ -147,9 +137,7 @@ class _ReplaceScreen extends StatelessWidget {
             children: [
               IconButton(
                 onPressed: () {
-                  pageController.jumpToPage(
-                    0,
-                  );
+                  context.replaceRoute(HomeRoute(child: const TaskerScreen()));
                 },
                 icon: SvgPicture.asset(
                   AssetNames.tasksIcon,
@@ -160,9 +148,7 @@ class _ReplaceScreen extends StatelessWidget {
               ),
               IconButton(
                 onPressed: () {
-                  pageController.jumpToPage(
-                    1,
-                  );
+                  context.replaceRoute(HomeRoute(child: const CalendarScreen()));
                 },
                 icon: SvgPicture.asset(
                   AssetNames.calendarIcon,
@@ -173,9 +159,7 @@ class _ReplaceScreen extends StatelessWidget {
               ),
               IconButton(
                 onPressed: () {
-                  pageController.jumpToPage(
-                    2,
-                  );
+                  context.replaceRoute(HomeRoute(child: const ChatsScreen()));
                 },
                 icon: SvgPicture.asset(
                   AssetNames.chatIcon,
@@ -186,9 +170,7 @@ class _ReplaceScreen extends StatelessWidget {
               ),
               IconButton(
                 onPressed: () {
-                  pageController.jumpToPage(
-                    3,
-                  );
+                  context.replaceRoute(HomeRoute(child: const SettingsScreen()));
                 },
                 icon: SvgPicture.asset(
                   AssetNames.settingsIcon,

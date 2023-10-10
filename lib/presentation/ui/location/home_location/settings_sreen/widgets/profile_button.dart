@@ -1,17 +1,34 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../../../../../app/app.dart';
+import '../../../../../../domain/domain.dart';
 import '../../../../../presentation.dart';
 
-class ProfileButton extends StatelessWidget {
-  ProfileButton({
+class ProfileButton extends StatefulWidget {
+  const ProfileButton({
     super.key,
   });
 
+  @override
+  State<ProfileButton> createState() => _ProfileButtonState();
+}
 
-  final userProfile = GetIt.instance<UserProfileBloc>().state.userProfile;
+class _ProfileButtonState extends State<ProfileButton> {
+  var _userProfile = GetIt.instance<UserProfileBloc>().state.userProfile;
+
+  @override
+  void initState() {
+    GetIt.instance<UserProfileRepositories>()
+        .userProfileChanges
+        .listen((event) {
+      _userProfile = event;
+      setState(() {});
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +36,7 @@ class ProfileButton extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        context.router.push(EditProfileRoute(userProfile: userProfile));
+        context.router.push(const EditProfileRoute());
       },
       child: Container(
         padding: EdgeInsets.symmetric(
@@ -34,12 +51,35 @@ class ProfileButton extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Container(
-              height: theme.spacings.x15,
-              width: theme.spacings.x15,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: theme.palette.bgPrimary,
+            ClipRRect(
+              borderRadius: BorderRadius.all(
+                theme.radiuses.x10,
+              ),
+              child: Container(
+                height: theme.spacings.x15,
+                width: theme.spacings.x15,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: theme.palette.bgPrimary,
+                ),
+                child: _userProfile.avatarUri == null ||
+                        _userProfile.avatarUri!.isEmpty
+                    ? Center(
+                        child: SizedBox(
+                          height: theme.spacings.x20,
+                          width: theme.spacings.x20,
+                          child: SvgPicture.asset(
+                            AssetNames.userAvatar,
+                            color: theme.palette.iconSecondary,
+                          ),
+                        ),
+                      )
+                    : FittedBox(
+                        fit: BoxFit.fitHeight,
+                        child: Image.asset(
+                          _userProfile.avatarUri!,
+                        ),
+                      ),
               ),
             ),
             SizedBox(
@@ -49,14 +89,14 @@ class ProfileButton extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  userProfile.username ?? '',
+                  _userProfile.username ?? '',
                   style: theme.textTheme.bodySmall!.copyWith(
                     fontWeight: FontWeight.w700,
                     fontSize: 12,
                   ),
                 ),
                 Text(
-                  userProfile.email ?? '',
+                  _userProfile.email ?? '',
                   style: theme.textTheme.bodySmall!.copyWith(
                     fontWeight: FontWeight.w700,
                     fontSize: 12,

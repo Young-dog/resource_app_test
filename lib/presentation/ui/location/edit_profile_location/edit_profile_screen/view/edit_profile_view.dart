@@ -21,7 +21,13 @@ class EditProfileView extends StatelessWidget {
         ),
         child: BlocBuilder<ProfileBloc, ProfileState>(
           builder: (context, state) {
-            print(state.avatarUri);
+            if (state.status.isLoading) {
+              return Center(
+                child: CircularProgressIndicator(
+                  color: theme.palette.iconSecondary,
+                ),
+              );
+            }
 
             return SingleChildScrollView(
               child: Column(
@@ -30,8 +36,8 @@ class EditProfileView extends StatelessWidget {
                     GestureDetector(
                       onTap: () {
                         context.read<ProfileBloc>().add(
-                          const ChangeProfileAvatarEvent(),
-                        );
+                              const ChangeProfileAvatarEvent(),
+                            );
                       },
                       child: ClipRRect(
                         borderRadius: BorderRadius.all(
@@ -48,18 +54,21 @@ class EditProfileView extends StatelessWidget {
                               width: theme.spacings.x1 / 2,
                             ),
                           ),
-                          child: const Center(
-                            child: CircularProgressIndicator(),
+                          child: Center(
+                            child: CircularProgressIndicator(
+                              color: theme.palette.iconSecondary,
+                            ),
                           ),
                         ),
                       ),
-                    ) else
+                    )
+                  else
                     ProfileAvatar(
                       avatar: state.avatarUri,
                       onChanged: () {
                         context.read<ProfileBloc>().add(
-                          const ChangeProfileAvatarEvent(),
-                        );
+                              const ChangeProfileAvatarEvent(),
+                            );
                       },
                     ),
                   SizedBox(
@@ -96,7 +105,9 @@ class EditProfileView extends StatelessWidget {
                     height: theme.spacings.x10,
                   ),
                   AccountButton(
-                    onChanged: () {},
+                    onChanged: () async {
+                      await _confirmPassword(context);
+                    },
                     icon: AssetNames.lockIcon,
                     title: 'Изменить пароль',
                   ),
@@ -136,6 +147,36 @@ class EditProfileView extends StatelessWidget {
           },
         ),
       ),
+    );
+  }
+
+  Future<void> _confirmPassword(BuildContext context) async {
+    final theme = Theme.of(context);
+
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: theme.palette.bgPrimary,
+          title: Text(
+            'Подтвердите пароль',
+            textAlign: TextAlign.center,
+          ),
+          titleTextStyle: theme.textTheme.bodyMedium,
+          content: PasswordInput(
+            labelText: 'Пароль',
+          ),
+          actions: [
+            SizedBox(
+              width: double.infinity,
+              child: PrimaryButton(onPressed: () {}, child: Text(
+                'Подтвердить',
+                textAlign: TextAlign.center,
+              ),),
+            )
+          ],
+        );
+      },
     );
   }
 }

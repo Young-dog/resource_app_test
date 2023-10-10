@@ -6,7 +6,6 @@ export 'bottom_time_picker.dart';
 export 'buttons/buttons.dart';
 export 'categories_menu.dart';
 export 'date_term_task.dart';
-export 'dropdown_field.dart';
 export 'go_back_button.dart';
 export 'inputs/inputs.dart';
 export 'level_importance_menu.dart';

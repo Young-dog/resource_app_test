@@ -64,8 +64,9 @@ class AuthRepositoryImpl extends AuthRepository {
   Future<void> logInWithGoogle() async {
     final userProfile = await _remoteAuthDataSource.logInWithGoogle();
 
-    await _userProfileRepositories.setUserSessionLocal(userProfile: userProfile);
-
+    if (userProfile != null) {
+      await _userProfileRepositories.setUserSessionLocal(userProfile: userProfile);
+    }
   }
 
   @override

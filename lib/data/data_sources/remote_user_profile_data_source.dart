@@ -60,7 +60,7 @@ class RemoteUserProfileDataSourceImpl implements RemoteUserProfileDataSource {
     if (url != null) {
       newPath = await _fileManager.saveLocal(
         file: file,
-        name: uid,
+        name: file.path.split('/').last,
       );
     }
 

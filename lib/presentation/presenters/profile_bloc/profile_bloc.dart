@@ -105,5 +105,33 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   Future<void> _onSubmit(
     SubmitChangesEvent event,
     Emitter<ProfileState> emit,
-  ) async {}
+  ) async {
+    emit(
+      state.copyWith(
+        status: ProfileStatus.loading,
+      ),
+    );
+
+    try {
+      await _userProfileRepositories.setUserSessionRemote(
+        userProfile: UserProfile(
+          uid: state.uid,
+          username: state.username,
+          email: state.email,
+          avatarUri: state.avatarUri,
+        ),
+      );
+      emit(
+        state.copyWith(
+          status: ProfileStatus.success,
+        ),
+      );
+    } on Exception {
+      emit(
+        state.copyWith(
+          status: ProfileStatus.failure,
+        ),
+      );
+    }
+  }
 }

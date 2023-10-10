@@ -1,7 +1,5 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../data/data.dart';
 import '../../../domain/domain.dart';
 
 part 'categories_event.dart';

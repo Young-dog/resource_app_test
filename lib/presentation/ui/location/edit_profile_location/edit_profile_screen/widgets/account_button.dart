@@ -62,7 +62,7 @@ class AccountButton extends StatelessWidget {
               Icons.navigate_next,
               color: color == null ? theme.palette.iconPrimary : color!,
             )
-          ],
+          ,],
         ),
       ),
     );

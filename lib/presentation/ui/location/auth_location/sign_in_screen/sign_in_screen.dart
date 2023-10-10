@@ -31,7 +31,7 @@ class SignInScreen extends StatelessWidget {
                 context.router.push(const ReVerificationRoute());
               }
               if (state.status.isSuccess) {
-                context.router.replace(const HomeRoute());
+                context.router.replace(HomeRoute(child: const TaskerScreen()));
               }
             },
             builder: (context, state) {
